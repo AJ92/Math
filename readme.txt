@@ -11,5 +11,5 @@ Vector3
 more soon...
 
 [24.08.2013]
-Matrix3x3 and Vector3 not done yet.
-Vector4 needs documentation.
+Matrix3x3  not done yet.
+Vector4 and Vector3 needs documentation.

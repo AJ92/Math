@@ -169,8 +169,13 @@ public:
     Matrix4x4& operator/=(const float& divisor);
     friend Matrix4x4 operator/(const Matrix4x4& m1, const float& divisor);
 
+
+    //Vector stuff
     friend Vector4 operator*(const Vector4& vector, const Matrix4x4& matrix);
     friend Vector4 operator*(const Matrix4x4& matrix, const Vector4& vector);
+
+    friend Vector3 operator*(const Vector3& vector, const Matrix4x4& matrix);
+    friend Vector3 operator*(const Matrix4x4& matrix, const Vector3& vector);
 
 private:
     float mat4[16];

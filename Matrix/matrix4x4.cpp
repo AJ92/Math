@@ -1099,3 +1099,71 @@ Vector4 operator*(const Matrix4x4& matrix, const Vector4& vector)
         vector.w() * matrix.mat4[15];
     return Vector4(x, y, z, w);
 }
+
+//Vector3
+Vector3 operator*(const Vector3& vector, const Matrix4x4& matrix)
+{
+    float x, y, z, w;
+    x = vector.x() * matrix.mat4[0] +
+        vector.y() * matrix.mat4[1] +
+        vector.z() * matrix.mat4[2] +
+        matrix.mat4[3];
+    y = vector.x() * matrix.mat4[4] +
+        vector.y() * matrix.mat4[5] +
+        vector.z() * matrix.mat4[6] +
+        matrix.mat4[7];
+    z = vector.x() * matrix.mat4[8] +
+        vector.y() * matrix.mat4[9] +
+        vector.z() * matrix.mat4[10] +
+        matrix.mat4[11];
+    w = vector.x() * matrix.mat4[12] +
+        vector.y() * matrix.mat4[13] +
+        vector.z() * matrix.mat4[14] +
+        matrix.mat4[15];
+    if (w == 1.0f)
+        return Vector3(x, y, z);
+    else
+        return Vector3(x / w, y / w, z / w);
+}
+
+Vector3 operator*(const Matrix4x4& matrix, const Vector3& vector)
+{
+    float x, y, z, w;
+    if (matrix.flagBits == Matrix4x4::Identity) {
+        return vector;
+    } else if (matrix.flagBits == Matrix4x4::Translation) {
+        return Vector3(vector.x() + matrix.mat4[12],
+                       vector.y() + matrix.mat4[13],
+                       vector.z() + matrix.mat4[14]);
+    } else if (matrix.flagBits ==
+                    (Matrix4x4::Translation | Matrix4x4::Scale)) {
+        return Vector3(vector.x() * matrix.mat4[0] + matrix.mat4[12],
+                       vector.y() * matrix.mat4[5] + matrix.mat4[13],
+                       vector.z() * matrix.mat4[10] + matrix.mat4[14]);
+    } else if (matrix.flagBits == Matrix4x4::Scale) {
+        return Vector3(vector.x() * matrix.mat4[0],
+                       vector.y() * matrix.mat4[5],
+                       vector.z() * matrix.mat4[10]);
+    } else {
+        x = vector.x() * matrix.mat4[0] +
+            vector.y() * matrix.mat4[4] +
+            vector.z() * matrix.mat4[8] +
+            matrix.mat4[12];
+        y = vector.x() * matrix.mat4[1] +
+            vector.y() * matrix.mat4[5] +
+            vector.z() * matrix.mat4[9] +
+            matrix.mat4[13];
+        z = vector.x() * matrix.mat4[2] +
+            vector.y() * matrix.mat4[6] +
+            vector.z() * matrix.mat4[10] +
+            matrix.mat4[14];
+        w = vector.x() * matrix.mat4[3] +
+            vector.y() * matrix.mat4[7] +
+            vector.z() * matrix.mat4[11] +
+            matrix.mat4[15];
+        if (w == 1.0f)
+            return Vector3(x, y, z);
+        else
+            return Vector3(x / w, y / w, z / w);
+    }
+}
