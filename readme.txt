@@ -13,3 +13,6 @@ more soon...
 [24.08.2013]
 Matrix3x3  not done yet.
 Vector4 and Vector3 needs documentation.
+
+[25.08.2013
+GitHub log fix.
