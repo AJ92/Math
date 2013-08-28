@@ -701,6 +701,36 @@ void Matrix4x4::set_array(float mat4[]){
     flagBits = General;
 }
 
+
+
+//Vector ops:
+
+Vector3 Matrix4x4::get_vector_up(){
+    return Vector3(mat4[1],mat4[5],mat4[9]);
+}
+
+Vector3 Matrix4x4::get_vector_right(){
+    return Vector3(mat4[0],mat4[4],mat4[8]);
+}
+
+Vector3 Matrix4x4::get_vector_look_at(){
+    return Vector3(mat4[2],mat4[6],mat4[10]);
+}
+
+Vector3 Matrix4x4::get_vector_pos(){
+    return Vector3(mat4[12],mat4[13],mat4[14]);
+}
+
+
+
+
+
+
+
+
+
+
+
 /*!
     Outputs the matrix in the console by using Qt's qDebug() function.
 */

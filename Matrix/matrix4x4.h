@@ -137,6 +137,15 @@ public:
     float* get_array();
     void set_array(float mat4[]);
 
+
+    //Vector ops...
+    Vector3 get_vector_up();
+    Vector3 get_vector_right();
+    Vector3 get_vector_look_at();
+
+    Vector3 get_vector_pos();
+
+
     void debug();
 
     //operators...
