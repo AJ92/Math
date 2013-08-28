@@ -103,6 +103,9 @@ public:
     void translate(float x, float y, float z);
     void scale(float sx, float sy, float sz);
 
+    void translate(Vector3 translate_vector);
+    void scale(Vector3 scale_vector);
+
     void rotate_x(float degrees);
     void rotate_y(float degrees);
     void rotate_z(float degrees);

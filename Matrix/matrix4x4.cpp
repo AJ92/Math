@@ -143,6 +143,14 @@ void Matrix4x4::scale(float sx, float sy, float sz){
 }
 
 
+void Matrix4x4::translate(Vector3 translate_vector){
+    translate(translate_vector[0],translate_vector[1],translate_vector[2]);
+}
+
+void Matrix4x4::scale(Vector3 scale_vector){
+    scale(scale_vector[0],scale_vector[1],scale_vector[2]);
+}
+
 
 
 
