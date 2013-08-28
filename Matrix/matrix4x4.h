@@ -145,6 +145,8 @@ public:
 
     Vector3 get_vector_pos();
 
+    Vector3 get_vector_scale();
+
 
     void debug();
 

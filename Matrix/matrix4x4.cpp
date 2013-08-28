@@ -721,6 +721,9 @@ Vector3 Matrix4x4::get_vector_pos(){
     return Vector3(mat4[12],mat4[13],mat4[14]);
 }
 
+Vector3 Matrix4x4::get_vector_scale(){
+    return Vector3(mat4[0],mat4[5],mat4[10]);
+}
 
 
 
