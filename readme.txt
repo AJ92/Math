@@ -16,3 +16,6 @@ Vector4 and Vector3 needs documentation.
 
 [25.08.2013]
 GitHub log fix.
+
+[29.08.2013]
+Testing functions in Engine, fixes for possible errors soon.
