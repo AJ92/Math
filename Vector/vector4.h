@@ -2,7 +2,7 @@
 #define VECTOR4_H
 
 #include <QDebug>
-#include "Math/Math.h"
+#include "Math/mathematics.h"
 
 /*
 

@@ -6,7 +6,7 @@
 #include "Math/Vector/vector3.h"
 #include "Math/Vector/vector4.h"
 #include "Math/Matrix/Matrix4x4.h"
-#include "Math/Math.h"
+#include "Math/mathematics.h"
 
 /*column-major notation for openGL use...
   but using in code row-major notation for indizes...

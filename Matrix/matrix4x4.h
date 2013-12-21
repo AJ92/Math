@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-#include "Math/Math.h"
+#include "Math/mathematics.h"
 
 
 

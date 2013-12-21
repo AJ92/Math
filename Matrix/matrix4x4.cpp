@@ -289,9 +289,10 @@ Matrix4x4 Matrix4x4::orthonormalInverse() const
     result.mat4[7] = 0.0f;
     result.mat4[11] = 0.0f;
 
+    //might have wrong values
     result.mat4[12] = -(result.mat4[0] * mat4[12] + result.mat4[4] * mat4[13] + result.mat4[8] * mat4[14]);
     result.mat4[13] = -(result.mat4[1] * mat4[12] + result.mat4[5] * mat4[13] + result.mat4[9] * mat4[14]);
-    result.mat4[14] = -(result.mat4[2] * mat4[12] + result.mat4[6] * mat4[13] + result.mat4[19] * mat4[14]);
+    result.mat4[14] = -(result.mat4[2] * mat4[12] + result.mat4[6] * mat4[13] + result.mat4[10] * mat4[14]);
     result.mat4[15] = 1.0f;
 
     return result;
