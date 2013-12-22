@@ -29,13 +29,6 @@ Matrix3x3::Matrix3x3(const Matrix3x3 &mat){
     this->mat3[6] = mat.mat3[6];
     this->mat3[7] = mat.mat3[7];
     this->mat3[8] = mat.mat3[8];
-    this->mat3[9] = mat.mat3[9];
-    this->mat3[10] = mat.mat3[10];
-    this->mat3[11] = mat.mat3[11];
-    this->mat3[12] = mat.mat3[12];
-    this->mat3[13] = mat.mat3[13];
-    this->mat3[14] = mat.mat3[14];
-    this->mat3[15] = mat.mat3[15];
     flagBits = General;
 }
 
@@ -458,7 +451,7 @@ Matrix3x3 operator/(const Matrix3x3& m1, const float& divisor){
 
     if(m1.flagBits == Matrix3x3::Identity){
         Matrix3x3 m_i;
-        m_i.mat3[0]    = m_i.mat3[5]  = m_i.mat3[10] = m_i.mat3[15] = divisor;
+        m_i.mat3[0] = m_i.mat3[4]  = m_i.mat3[8] = divisor;
         return m_i;
     }
 
