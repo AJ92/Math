@@ -5,21 +5,21 @@ Vector4::Vector4()
     set_to_null();
 }
 
-Vector4::Vector4(float f){
+Vector4::Vector4(double f){
     vec4[0] = f;
     vec4[1] = f;
     vec4[2] = f;
     vec4[3] = f;
 }
 
-Vector4::Vector4(float x, float y, float z, float w){
+Vector4::Vector4(double x, double y, double z, double w){
     vec4[0] = x;
     vec4[1] = y;
     vec4[2] = z;
     vec4[3] = w;
 }
 
-Vector4::Vector4(const float *vec4){
+Vector4::Vector4(const double *vec4){
     this->vec4[0] = vec4[0];
     this->vec4[1] = vec4[1];
     this->vec4[2] = vec4[2];
@@ -41,64 +41,64 @@ void Vector4::set_to_null(){
 }
 
 bool Vector4::is_null() const{
-    return vec4[0] == 0.f && vec4[1] == 0.f && vec4[2] == 0.f && vec4[3] == 0.f;
+    return vec4[0] == 0.0 && vec4[1] == 0.0 && vec4[2] == 0.0 && vec4[3] == 0.0;
 }
 
-void Vector4::set_value(int index, float value){
+void Vector4::set_value(int index, double value){
     if(index < 0 && index > 3){
-        qDebug("void Vector4::set_value(int index, float value) has a wrong index: %i", index);
+        qDebug("void Vector4::set_value(int index, double value) has a wrong index: %i", index);
         return;
     }
     vec4[index] = value;
 }
 
-float Vector4::get_value(int index){
+double Vector4::get_value(int index){
     if(index < 0 && index > 3){
-        qDebug("float Vector4::get_value(int index) has a wrong index: %i", index);
+        qDebug("double Vector4::get_value(int index) has a wrong index: %i", index);
         return 0;
     }
     return vec4[index];
 
 }
 
-float Vector4::x() const{
+double Vector4::x() const{
     return vec4[0];
 }
 
-float Vector4::y() const{
+double Vector4::y() const{
     return vec4[1];
 }
 
-float Vector4::z() const{
+double Vector4::z() const{
     return vec4[2];
 }
 
-float Vector4::w() const{
+double Vector4::w() const{
     return vec4[3];
 }
 
-void Vector4::set_x(float x){
+void Vector4::set_x(double x){
     vec4[0] = x;
 }
 
-void Vector4::set_y(float y){
+void Vector4::set_y(double y){
     vec4[1] = y;
 }
 
-void Vector4::set_z(float z){
+void Vector4::set_z(double z){
     vec4[2] = z;
 }
 
-void Vector4::set_w(float w){
+void Vector4::set_w(double w){
     vec4[3] = w;
 }
 
 
-float Vector4::length() const{
+double Vector4::length() const{
     return sqrt(vec4[0] * vec4[0] + vec4[1] * vec4[1] + vec4[2] * vec4[2] + vec4[3] * vec4[3]);
 }
 
-float Vector4::lengthSquared() const{
+double Vector4::lengthSquared() const{
     return vec4[0] * vec4[0] + vec4[1] * vec4[1] + vec4[2] * vec4[2] + vec4[3] * vec4[3];
 }
 
@@ -129,32 +129,32 @@ void Vector4::normalize(){
 }
 
 
-const float& Vector4::operator[](int index) const{
+const double& Vector4::operator[](int index) const{
     if(index < 0 && index > 3){
-        qDebug("const float& Vector4::operator[](int index) const has a wrong index: %i", index);
+        qDebug("const double& Vector4::operator[](int index) const has a wrong index: %i", index);
     }
     return vec4[index];
 }
 
-float& Vector4::operator[](int index){
+double& Vector4::operator[](int index){
     if(index < 0 && index > 3){
-        qDebug("float& Vector4::operator[](int index) has a wrong index: %i", index);
+        qDebug("double& Vector4::operator[](int index) has a wrong index: %i", index);
     }
     //var can be modified after return...
     return vec4[index];
 }
 
 
-const float& Vector4::operator()(int index) const{
+const double& Vector4::operator()(int index) const{
     if(index < 0 && index > 3){
-        qDebug("const float& Vector4::operator()(int index) const has a wrong index: %i", index);
+        qDebug("const double& Vector4::operator()(int index) const has a wrong index: %i", index);
     }
     return vec4[index];
 }
 
-float& Vector4::operator()(int index){
+double& Vector4::operator()(int index){
     if(index < 0 && index > 3){
-        qDebug("float& Vector4::operator()(int index) has a wrong index: %i", index);
+        qDebug("double& Vector4::operator()(int index) has a wrong index: %i", index);
     }
     //var can be modified after return...
     return vec4[index];
@@ -177,7 +177,7 @@ Vector4& Vector4::operator-=(const Vector4 &vector){
     return *this;
 }
 
-Vector4& Vector4::operator*=(float factor){
+Vector4& Vector4::operator*=(double factor){
     vec4[0] *= factor;
     vec4[1] *= factor;
     vec4[2] *= factor;
@@ -193,7 +193,7 @@ Vector4& Vector4::operator*=(const Vector4 &vector){
     return *this;
 }
 
-Vector4& Vector4::operator/=(float divisor){
+Vector4& Vector4::operator/=(double divisor){
     vec4[0] /= divisor;
     vec4[1] /= divisor;
     vec4[2] /= divisor;
@@ -202,7 +202,7 @@ Vector4& Vector4::operator/=(float divisor){
 }
 
 
-float Vector4::dotProduct(const Vector4& v1, const Vector4& v2){
+double Vector4::dotProduct(const Vector4& v1, const Vector4& v2){
     return v1.vec4[0] * v2.vec4[0] + v1.vec4[1] * v2.vec4[1] +
            v1.vec4[2] * v2.vec4[2] + v1.vec4[3] * v2.vec4[3];
 }
@@ -229,12 +229,12 @@ const Vector4 operator-(const Vector4 &v1, const Vector4 &v2){
                    v1.vec4[2] - v2.vec4[2] , v1.vec4[3] - v2.vec4[3]);
 }
 
-const Vector4 operator*(float factor, const Vector4 &vector){
+const Vector4 operator*(double factor, const Vector4 &vector){
     return Vector4(vector.vec4[0] * factor , vector.vec4[1] * factor ,
                    vector.vec4[2] * factor , vector.vec4[3] * factor);
 }
 
-const Vector4 operator*(const Vector4 &vector, float factor){
+const Vector4 operator*(const Vector4 &vector, double factor){
     return Vector4(vector.vec4[0] * factor , vector.vec4[1] * factor ,
                    vector.vec4[2] * factor , vector.vec4[3] * factor);
 }
@@ -249,7 +249,7 @@ const Vector4 operator-(const Vector4 &vector){
                    -vector.vec4[2], -vector.vec4[3]);
 }
 
-const Vector4 operator/(const Vector4 &vector, float divisor){
+const Vector4 operator/(const Vector4 &vector, double divisor){
     return Vector4(vector.vec4[0] / divisor , vector.vec4[1] / divisor ,
                    vector.vec4[2] / divisor , vector.vec4[3] / divisor);
 }

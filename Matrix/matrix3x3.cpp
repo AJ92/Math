@@ -37,9 +37,9 @@ Matrix3x3::Matrix3x3(const Matrix3x3 &mat){
 
     Constructs the 3x3 Matrix and sets the components to \a f1 - \a f9.
 */
-Matrix3x3::Matrix3x3(float f1, float f2, float f3,
-                     float f4, float f5, float f6,
-                     float f7, float f8, float f9)
+Matrix3x3::Matrix3x3(double f1, double f2, double f3,
+                     double f4, double f5, double f6,
+                     double f7, double f8, double f9)
 {
     mat3[0] = f1;
     mat3[1] = f2;
@@ -63,7 +63,7 @@ Matrix3x3::Matrix3x3(float f1, float f2, float f3,
     \sa set_array()
 
 */
-Matrix3x3::Matrix3x3(const float *mat)
+Matrix3x3::Matrix3x3(const double *mat)
 {
     for (int i = 0; i < 9; i++){
         mat3[i] = mat[i];
@@ -90,11 +90,11 @@ void Matrix3x3::set_to_identity(){
 bool Matrix3x3::is_identity(){
     if (flagBits == Identity)
         return true;
-    if (mat3[0] != 1.0f || mat3[1] != 0.0f || mat3[2] != 0.0f)
+    if (mat3[0] != 1.0 || mat3[1] != 0.0 || mat3[2] != 0.0)
         return false;
-    if (mat3[3] != 0.0f || mat3[4] != 1.0f || mat3[5] != 0.0f)
+    if (mat3[3] != 0.0 || mat3[4] != 1.0 || mat3[5] != 0.0)
         return false;
-    if (mat3[6] != 0.0f || mat3[7] != 0.0f)
+    if (mat3[6] != 0.0 || mat3[7] != 0.0)
         return false;
     return (mat3[8] == 1.0f);
 }
@@ -110,7 +110,7 @@ bool Matrix3x3::is_identity(){
 /*!
     Sets the given \a value at the \a index in the matrix.
 */
-void Matrix3x3::set_value(int index, float value){
+void Matrix3x3::set_value(int index, double value){
     if(index < 0 || index > 8){
         return;
     }
@@ -121,7 +121,7 @@ void Matrix3x3::set_value(int index, float value){
 /*!
     Returns the value at the given \a index.
 */
-float Matrix3x3::get_value(int index){
+double Matrix3x3::get_value(int index){
     if(index < 0 || index > 8){
         return 0;
     }
@@ -129,16 +129,16 @@ float Matrix3x3::get_value(int index){
 }
 
 /*!
-    Returns the matrix as an array of floats.
+    Returns the matrix as an array of doubles.
 */
-float* Matrix3x3::get_array(){
+double* Matrix3x3::get_array(){
     return mat3;
 }
 
 /*!
     Sets the components of the matrix to the values stored int the \a mat3 array.
 */
-void Matrix3x3::set_array(float mat3[]){
+void Matrix3x3::set_array(double mat3[]){
     this->mat3[0] = mat3[0];
     this->mat3[1] = mat3[1];
     this->mat3[2] = mat3[2];
@@ -169,10 +169,10 @@ void Matrix3x3::debug(){
 /*!
     For easier access to the values of the matrix you can use this function.
 */
-const float& Matrix3x3::operator[](int index) const
+const double& Matrix3x3::operator[](int index) const
 {
     if(index < 0 && index > 8){
-        qDebug("const float& Matrix3x3::operator()(int index) has a wrong index: %i", index);
+        qDebug("const double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
     }
     return mat3[index];
 }
@@ -180,33 +180,10 @@ const float& Matrix3x3::operator[](int index) const
 /*!
     For easier access to the values of the matrix you can use this function.
 */
-float& Matrix3x3::operator[](int index)
+double& Matrix3x3::operator[](int index)
 {
     if(index < 0 && index > 8){
-        qDebug("float& Matrix3x3::operator()(int index) has a wrong index: %i", index);
-    }
-    flagBits = General;
-    return mat3[index];
-}
-
-/*!
-    For easier access to the values of the matrix you can use this function.
-*/
-const float& Matrix3x3::operator()(int index) const
-{
-    if(index < 0 && index > 8){
-        qDebug("const float& Matrix3x3::operator()(int index) has a wrong index: %i", index);
-    }
-    return mat3[index];
-}
-
-/*!
-    For easier access to the values of the matrix you can use this function.
-*/
-float& Matrix3x3::operator()(int index)
-{
-    if(index < 0 && index > 8){
-        qDebug("float& Matrix3x3::operator()(int index) has a wrong index: %i", index);
+        qDebug("double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
     }
     flagBits = General;
     return mat3[index];
@@ -215,10 +192,33 @@ float& Matrix3x3::operator()(int index)
 /*!
     For easier access to the values of the matrix you can use this function.
 */
-const float& Matrix3x3::operator()(int aRow, int aColumn) const
+const double& Matrix3x3::operator()(int index) const
+{
+    if(index < 0 && index > 8){
+        qDebug("const double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
+    }
+    return mat3[index];
+}
+
+/*!
+    For easier access to the values of the matrix you can use this function.
+*/
+double& Matrix3x3::operator()(int index)
+{
+    if(index < 0 && index > 8){
+        qDebug("double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
+    }
+    flagBits = General;
+    return mat3[index];
+}
+
+/*!
+    For easier access to the values of the matrix you can use this function.
+*/
+const double& Matrix3x3::operator()(int aRow, int aColumn) const
 {
     if(aRow < 0 && aRow > 2 && aColumn < 0 && aColumn > 2){
-        qDebug("const float& Matrix3x3::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
+        qDebug("const double& Matrix3x3::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
     }
     return mat3[aColumn+aRow*3];
 }
@@ -226,10 +226,10 @@ const float& Matrix3x3::operator()(int aRow, int aColumn) const
 /*!
     For easier access to the values of the matrix you can use this function.
 */
-float& Matrix3x3::operator()(int aRow, int aColumn)
+double& Matrix3x3::operator()(int aRow, int aColumn)
 {
     if(aRow < 0 && aRow > 2 && aColumn < 0 && aColumn > 2){
-        qDebug("float& Matrix3x3::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
+        qDebug("double& Matrix3x3::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
     }
     flagBits = General;
     return mat3[aColumn+aRow*3];
@@ -267,7 +267,7 @@ Matrix3x3 operator+(const Matrix3x3& m1, const Matrix3x3& m2){
 /*!
     Adds the \a value to itself and returns itself.
 */
-Matrix3x3& Matrix3x3::operator+=(const float& value){
+Matrix3x3& Matrix3x3::operator+=(const double& value){
     *this = *this + value;
     return *this;
 }
@@ -275,7 +275,7 @@ Matrix3x3& Matrix3x3::operator+=(const float& value){
 /*!
     Adds the \a value to \a m1 matrix and returns the result.
 */
-Matrix3x3 operator+(const Matrix3x3& m1, const float& value){
+Matrix3x3 operator+(const Matrix3x3& m1, const double& value){
     Matrix3x3 m(1);
     m.mat3[0] = m1.mat3[0] + value;
     m.mat3[1] = m1.mat3[1] + value;
@@ -293,7 +293,7 @@ Matrix3x3 operator+(const Matrix3x3& m1, const float& value){
 /*!
     Adds the \a m1 and \a m2 matrix and returns the result.
 */
-Matrix3x3 operator+(const float& value, const Matrix3x3& m1){
+Matrix3x3 operator+(const double& value, const Matrix3x3& m1){
     return m1 + value;
 }
 
@@ -385,7 +385,7 @@ Matrix3x3 operator*(const Matrix3x3& m1, const Matrix3x3& m2){
 /*!
     Multiplys the matrix with a \a multiplier. Scales all matrix values.
 */
-Matrix3x3& Matrix3x3::operator*=(const float& multiplier){
+Matrix3x3& Matrix3x3::operator*=(const double& multiplier){
     *this = *this * multiplier;
     return *this;
 }
@@ -393,7 +393,7 @@ Matrix3x3& Matrix3x3::operator*=(const float& multiplier){
 /*!
     Multiplys \a m1 with a \a multiplier and returns the result. Scales all matrix values.
 */
-Matrix3x3 operator*(const Matrix3x3& m1, const float& multiplier){
+Matrix3x3 operator*(const Matrix3x3& m1, const double& multiplier){
 
 
     if(m1.flagBits == Matrix3x3::Identity){
@@ -428,9 +428,9 @@ Matrix3x3 operator*(const Matrix3x3& m1, const float& multiplier){
     Multiplys \a m1 with a \a multiplier and returns the result. Scales all matrix values.
     Actually just a kommutative way of the above function.
 
-    \sa operator*(const Matrix3x3& m1, const float& multiplier)
+    \sa operator*(const Matrix3x3& m1, const double& multiplier)
 */
-Matrix3x3 operator*(const float& multiplier, const Matrix3x3& m1){
+Matrix3x3 operator*(const double& multiplier, const Matrix3x3& m1){
     return m1 * multiplier;
 }
 
@@ -438,7 +438,7 @@ Matrix3x3 operator*(const float& multiplier, const Matrix3x3& m1){
 /*!
     Divides the matrix with a \a divisor. Scales all matrix values.
 */
-Matrix3x3& Matrix3x3::operator/=(const float& divisor){
+Matrix3x3& Matrix3x3::operator/=(const double& divisor){
     *this = *this / divisor;
     return *this;
 }
@@ -446,7 +446,7 @@ Matrix3x3& Matrix3x3::operator/=(const float& divisor){
 /*!
     Divides \a m1 with a \a divisor and returns the result. Scales all matrix values.
 */
-Matrix3x3 operator/(const Matrix3x3& m1, const float& divisor){
+Matrix3x3 operator/(const Matrix3x3& m1, const double& divisor){
 
 
     if(m1.flagBits == Matrix3x3::Identity){

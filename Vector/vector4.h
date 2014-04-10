@@ -19,32 +19,32 @@ class Vector4
 {
 public:
     Vector4();
-    Vector4(float f);
-    Vector4(float x, float y, float z, float w);
-    Vector4(const float *vec4);
+    Vector4(double f);
+    Vector4(double x, double y, double z, double w);
+    Vector4(const double *vec4);
     Vector4(Vector4 const& vec);
 
     void set_to_null();
 
     bool is_null() const;
 
-    void set_value(int index, float value);
-    float get_value(int index);
+    void set_value(int index, double value);
+    double get_value(int index);
 
-    float x() const;
-    float y() const;
-    float z() const;
-    float w() const;
+    double x() const;
+    double y() const;
+    double z() const;
+    double w() const;
 
-    void set_x(float x);
-    void set_y(float y);
-    void set_z(float z);
-    void set_w(float w);
+    void set_x(double x);
+    void set_y(double y);
+    void set_z(double z);
+    void set_w(double w);
 
 
 
-    float length() const;
-    float lengthSquared() const;
+    double length() const;
+    double lengthSquared() const;
 
     Vector4 normalized() const;
     void normalize();
@@ -54,30 +54,30 @@ public:
 
 
     //operators...
-    const float& operator[](int index) const;
-    float& operator[](int index);
+    const double& operator[](int index) const;
+    double& operator[](int index);
 
-    const float& operator()(int index) const;
-    float& operator()(int index);
+    const double& operator()(int index) const;
+    double& operator()(int index);
 
 
     Vector4 &operator+=(const Vector4 &vector);
     Vector4 &operator-=(const Vector4 &vector);
-    Vector4 &operator*=(float factor);
+    Vector4 &operator*=(double factor);
     Vector4 &operator*=(const Vector4 &vector);
-    Vector4 &operator/=(float divisor);
+    Vector4 &operator/=(double divisor);
 
-    static float dotProduct(const Vector4& v1, const Vector4& v2);
+    static double dotProduct(const Vector4& v1, const Vector4& v2);
 
     friend bool operator==(const Vector4 &v1, const Vector4 &v2);
     friend bool operator!=(const Vector4 &v1, const Vector4 &v2);
     friend const Vector4 operator+(const Vector4 &v1, const Vector4 &v2);
     friend const Vector4 operator-(const Vector4 &v1, const Vector4 &v2);
-    friend const Vector4 operator*(float factor, const Vector4 &vector);
-    friend const Vector4 operator*(const Vector4 &vector, float factor);
+    friend const Vector4 operator*(double factor, const Vector4 &vector);
+    friend const Vector4 operator*(const Vector4 &vector, double factor);
     friend const Vector4 operator*(const Vector4 &v1, const Vector4& v2);
     friend const Vector4 operator-(const Vector4 &vector);
-    friend const Vector4 operator/(const Vector4 &vector, float divisor);
+    friend const Vector4 operator/(const Vector4 &vector, double divisor);
 
 
     //Matrix stuff
@@ -86,7 +86,7 @@ public:
 
 
 private:
-    float vec4[4];
+    double vec4[4];
 
     //dirty inline hack ... i don't like it but its short :D
     Vector4(int) { }

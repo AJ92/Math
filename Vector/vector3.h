@@ -19,65 +19,70 @@ class Vector3
 {
 public:
     Vector3();
-    Vector3(float f);
-    Vector3(float x, float y, float z);
-    Vector3(const float *vec3);
+    Vector3(double f);
+    Vector3(double x, double y, double z);
+    Vector3(const double *vec3);
     Vector3(Vector3 const& vec);
 
     void set_to_null();
 
     bool is_null() const;
 
-    void set_value(int index, float value);
-    float get_value(int index);
+    void set_value(int index, double value);
+    double get_value(int index);
 
-    float x() const;
-    float y() const;
-    float z() const;
-
-
-    void set_x(float x);
-    void set_y(float y);
-    void set_z(float z);
+    double x() const;
+    double y() const;
+    double z() const;
 
 
+    void set_x(double x);
+    void set_y(double y);
+    void set_z(double z);
 
 
-    float length() const;
-    float lengthSquared() const;
+
+
+    double length() const;
+    double lengthSquared() const;
 
     Vector3 normalized() const;
     void normalize();
 
 
+    double distance(Vector3 vector);
 
 
 
     //operators...
-    const float& operator[](int index) const;
-    float& operator[](int index);
+    const double& operator[](int index) const;
+    double& operator[](int index);
 
-    const float& operator()(int index) const;
-    float& operator()(int index);
+    const double& operator()(int index) const;
+    double& operator()(int index);
 
 
     Vector3 &operator+=(const Vector3 &vector);
     Vector3 &operator-=(const Vector3 &vector);
-    Vector3 &operator*=(float factor);
+    Vector3 &operator*=(double factor);
     Vector3 &operator*=(const Vector3 &vector);
-    Vector3 &operator/=(float divisor);
+    Vector3 &operator/=(double divisor);
 
-    static float dotProduct(const Vector3& v1, const Vector3& v2);
+    static double dotProduct(const Vector3& v1, const Vector3& v2);
+    static Vector3 crossProduct(const Vector3& v1, const Vector3& v2);
+    static Vector3 normal(const Vector3& v1, const Vector3& v2);
+    static Vector3 normal(const Vector3& v1, const Vector3& v2, const Vector3& v3);
+
 
     friend bool operator==(const Vector3 &v1, const Vector3 &v2);
     friend bool operator!=(const Vector3 &v1, const Vector3 &v2);
     friend const Vector3 operator+(const Vector3 &v1, const Vector3 &v2);
     friend const Vector3 operator-(const Vector3 &v1, const Vector3 &v2);
-    friend const Vector3 operator*(float factor, const Vector3 &vector);
-    friend const Vector3 operator*(const Vector3 &vector, float factor);
+    friend const Vector3 operator*(double factor, const Vector3 &vector);
+    friend const Vector3 operator*(const Vector3 &vector, double factor);
     friend const Vector3 operator*(const Vector3 &v1, const Vector3& v2);
     friend const Vector3 operator-(const Vector3 &vector);
-    friend const Vector3 operator/(const Vector3 &vector, float divisor);
+    friend const Vector3 operator/(const Vector3 &vector, double divisor);
 
 
     //Matrix stuff
@@ -86,7 +91,7 @@ public:
 
 
 private:
-    float vec3[3];
+    double vec3[3];
 
     //dirty inline hack ... i don't like it but its short :D
     Vector3(int) { }

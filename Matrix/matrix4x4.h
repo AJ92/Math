@@ -88,11 +88,11 @@ public:
 
     //Multi-purpose constructors:
     Matrix4x4();
-    Matrix4x4(float f1, float f2, float f3, float f4,
-              float f5, float f6, float f7, float f8,
-              float f9, float f10, float f11, float f12,
-              float f13, float f14, float f15, float f16);
-    Matrix4x4(const float *mat4);
+    Matrix4x4(double f1, double f2, double f3, double f4,
+              double f5, double f6, double f7, double f8,
+              double f9, double f10, double f11, double f12,
+              double f13, double f14, double f15, double f16);
+    Matrix4x4(const double *mat4);
     Matrix4x4(Matrix4x4 const& mat);
 
 
@@ -100,15 +100,19 @@ public:
     void set_to_identity();
     bool is_identity();
 
-    void translate(float x, float y, float z);
-    void scale(float sx, float sy, float sz);
+    void translate(double x, double y, double z);
+    void scale(double sx, double sy, double sz);
 
     void translate(Vector3 translate_vector);
     void scale(Vector3 scale_vector);
 
-    void rotate_x(float degrees);
-    void rotate_y(float degrees);
-    void rotate_z(float degrees);
+    void rotate_x(double degrees);
+    void rotate_y(double degrees);
+    void rotate_z(double degrees);
+
+    void rotate(double angle, const Vector3 &vector);
+    void rotate(double angle, double x, double y, double z);
+
 
     //Quaternion Class is missing...
     //void rotate(const Quaternion& quaternion);
@@ -119,26 +123,26 @@ public:
 
 
 
-    float determinant() const;
+    double determinant() const;
     Matrix4x4 inverted(bool *invertible = 0) const;
     Matrix4x4 transposed() const;
 
     Matrix3x3 normalMatrix() const;
 
-    void ortho(float left, float right, float bottom, float top, float nearPlane, float farPlane);
-    void frustum(float left, float right, float bottom, float top, float nearPlane, float farPlane);
-    void perspective(float angle, float aspect, float nearPlane, float farPlane);
+    void ortho(double left, double right, double bottom, double top, double nearPlane, double farPlane);
+    void frustum(double left, double right, double bottom, double top, double nearPlane, double farPlane);
+    void perspective(double angle, double aspect, double nearPlane, double farPlane);
 
     //Vector classes not done yet...
     //void lookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
 
     Matrix3x3 rotationMatrix() const;
 
-    void set_value(int index, float value);
-    float get_value(int index);
+    void set_value(int index, double value);
+    double get_value(int index);
 
-    float* get_array();
-    void set_array(float mat4[]);
+    double* get_array();
+    void set_array(double mat4[]);
 
 
     //Vector ops...
@@ -151,24 +155,36 @@ public:
     Vector3 get_vector_scale();
 
 
+    //i hate inline but it's short...
+    inline double *data(){
+        // We have to assume that the caller will modify the matrix elements,
+        // so we flip it over to "General" mode.
+        flagBits = General;
+        return mat4;
+    }
+    inline const double *data() const { return mat4; }
+    inline const double *constData() const { return mat4; }
+
+
+
     void debug();
 
     //operators...
-    const float& operator[](int index) const;
-    float& operator[](int index);
+    const double& operator[](int index) const;
+    double& operator[](int index);
 
-    const float& operator()(int index) const;
-    float& operator()(int index);
+    const double& operator()(int index) const;
+    double& operator()(int index);
 
-    const float& operator()(int row, int column) const;
-    float& operator()(int row, int column);
+    const double& operator()(int row, int column) const;
+    double& operator()(int row, int column);
 
     Matrix4x4& operator+=(const Matrix4x4& other);
     friend Matrix4x4 operator+(const Matrix4x4& m1, const Matrix4x4& m2);
 
-    Matrix4x4& operator+=(const float& value);
-    friend Matrix4x4 operator+(const Matrix4x4& m1, const float& value);
-    friend Matrix4x4 operator+(const float& value, const Matrix4x4& m1);
+    Matrix4x4& operator+=(const double& value);
+    friend Matrix4x4 operator+(const Matrix4x4& m1, const double& value);
+    friend Matrix4x4 operator+(const double& value, const Matrix4x4& m1);
 
     Matrix4x4& operator-=(const Matrix4x4& other);
     friend Matrix4x4 operator-(const Matrix4x4& m1, const Matrix4x4& m2);
@@ -176,12 +192,12 @@ public:
     Matrix4x4& operator*=(const Matrix4x4& other);
     friend Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2);
 
-    Matrix4x4& operator*=(const float& multiplier);
-    friend Matrix4x4 operator*(const Matrix4x4& m1, const float& multiplier);
-    friend Matrix4x4 operator*(const float& multiplier, const Matrix4x4& m1);
+    Matrix4x4& operator*=(const double& multiplier);
+    friend Matrix4x4 operator*(const Matrix4x4& m1, const double& multiplier);
+    friend Matrix4x4 operator*(const double& multiplier, const Matrix4x4& m1);
 
-    Matrix4x4& operator/=(const float& divisor);
-    friend Matrix4x4 operator/(const Matrix4x4& m1, const float& divisor);
+    Matrix4x4& operator/=(const double& divisor);
+    friend Matrix4x4 operator/(const Matrix4x4& m1, const double& divisor);
 
 
     //Vector stuff
@@ -192,7 +208,7 @@ public:
     friend Vector3 operator*(const Matrix4x4& matrix, const Vector3& vector);
 
 private:
-    float mat4[16];
+    double mat4[16];
 
     int flagBits;           // Flag bits from the enum below.
 

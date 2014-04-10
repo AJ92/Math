@@ -29,10 +29,10 @@ class Matrix3x3
 public:
     //Multi-purpose constructors:
     Matrix3x3();
-    Matrix3x3(float f1, float f2, float f3,
-              float f4, float f5, float f6,
-              float f7, float f8, float f9);
-    Matrix3x3(const float *mat3);
+    Matrix3x3(double f1, double f2, double f3,
+              double f4, double f5, double f6,
+              double f7, double f8, double f9);
+    Matrix3x3(const double *mat3);
     Matrix3x3(Matrix3x3 const& mat);
 
     void set_to_identity();
@@ -40,30 +40,30 @@ public:
 
 
 
-    void set_value(int index, float value);
-    float get_value(int index);
+    void set_value(int index, double value);
+    double get_value(int index);
 
-    float* get_array();
-    void set_array(float mat3[]);
+    double* get_array();
+    void set_array(double mat3[]);
 
     void debug();
 
     //operators...
-    const float& operator[](int index) const;
-    float& operator[](int index);
+    const double& operator[](int index) const;
+    double& operator[](int index);
 
-    const float& operator()(int index) const;
-    float& operator()(int index);
+    const double& operator()(int index) const;
+    double& operator()(int index);
 
-    const float& operator()(int row, int column) const;
-    float& operator()(int row, int column);
+    const double& operator()(int row, int column) const;
+    double& operator()(int row, int column);
 
     Matrix3x3& operator+=(const Matrix3x3& other);
     friend Matrix3x3 operator+(const Matrix3x3& m1, const Matrix3x3& m2);
 
-    Matrix3x3& operator+=(const float& value);
-    friend Matrix3x3 operator+(const Matrix3x3& m1, const float& value);
-    friend Matrix3x3 operator+(const float& value, const Matrix3x3& m1);
+    Matrix3x3& operator+=(const double& value);
+    friend Matrix3x3 operator+(const Matrix3x3& m1, const double& value);
+    friend Matrix3x3 operator+(const double& value, const Matrix3x3& m1);
 
     Matrix3x3& operator-=(const Matrix3x3& other);
     friend Matrix3x3 operator-(const Matrix3x3& m1, const Matrix3x3& m2);
@@ -71,15 +71,15 @@ public:
     Matrix3x3& operator*=(const Matrix3x3& other);
     friend Matrix3x3 operator*(const Matrix3x3& m1, const Matrix3x3& m2);
 
-    Matrix3x3& operator*=(const float& multiplier);
-    friend Matrix3x3 operator*(const Matrix3x3& m1, const float& multiplier);
-    friend Matrix3x3 operator*(const float& multiplier, const Matrix3x3& m1);
+    Matrix3x3& operator*=(const double& multiplier);
+    friend Matrix3x3 operator*(const Matrix3x3& m1, const double& multiplier);
+    friend Matrix3x3 operator*(const double& multiplier, const Matrix3x3& m1);
 
-    Matrix3x3& operator/=(const float& divisor);
-    friend Matrix3x3 operator/(const Matrix3x3& m1, const float& divisor);
+    Matrix3x3& operator/=(const double& divisor);
+    friend Matrix3x3 operator/(const Matrix3x3& m1, const double& divisor);
 
 private:
-    float mat3[9];
+    double mat3[9];
 
     int flagBits;           // Flag bits from the enum below.
 

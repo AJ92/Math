@@ -44,10 +44,10 @@ Matrix4x4::Matrix4x4(const Matrix4x4 &mat){
 
     Constructs the 4x4 Matrix and sets the components to \a f1 - \a f16.
 */
-Matrix4x4::Matrix4x4(float f1, float f2, float f3, float f4,
-                    float f5, float f6, float f7, float f8,
-                    float f9, float f10, float f11, float f12,
-                    float f13, float f14, float f15, float f16)
+Matrix4x4::Matrix4x4(double f1, double f2, double f3, double f4,
+                    double f5, double f6, double f7, double f8,
+                    double f9, double f10, double f11, double f12,
+                    double f13, double f14, double f15, double f16)
 {
     mat4[0] = f1;
     mat4[1] = f2;
@@ -77,7 +77,7 @@ Matrix4x4::Matrix4x4(float f1, float f2, float f3, float f4,
     \sa set_array()
 
 */
-Matrix4x4::Matrix4x4(const float *mat)
+Matrix4x4::Matrix4x4(const double *mat)
 {
     for (int i = 0; i < 16; i++){
         mat4[i] = mat[i];
@@ -121,7 +121,7 @@ bool Matrix4x4::is_identity(){
 /*!
     Loads the Identity and translates it to \a x, \a y and \a z coordinates.
 */
-void Matrix4x4::translate(float x, float y, float z){
+void Matrix4x4::translate(double x, double y, double z){
     set_to_identity();
     // Translate slots.
     mat4[12] = x;
@@ -133,7 +133,7 @@ void Matrix4x4::translate(float x, float y, float z){
 /*!
     Loads the Identity and scales it to \a sx, \a sy and \a sz.
 */
-void Matrix4x4::scale(float sx, float sy, float sz){
+void Matrix4x4::scale(double sx, double sy, double sz){
     set_to_identity();
     // Scale slots.
     mat4[0]   = sx;
@@ -166,10 +166,10 @@ void Matrix4x4::scale(Vector3 scale_vector){
 /*!
     Loads the Identity and rotates it around it's X-axis by \a degrees.
 */
-void Matrix4x4::rotate_x(float degrees){
+void Matrix4x4::rotate_x(double degrees){
     set_to_identity();
 
-    float radians = degreesToRadians(degrees);
+    double radians = degreesToRadians(degrees);
 
     // Rotate X formula.
     mat4[5] = cos(radians);
@@ -182,10 +182,10 @@ void Matrix4x4::rotate_x(float degrees){
 /*!
     Loads the Identity and rotates it around it's Y-axis by \a degrees.
 */
-void Matrix4x4::rotate_y(float degrees){
+void Matrix4x4::rotate_y(double degrees){
     set_to_identity();
 
-    float radians = degreesToRadians(degrees);
+    double radians = degreesToRadians(degrees);
 
     // Rotate Y formula.
     mat4[0] = cos(radians);
@@ -198,10 +198,10 @@ void Matrix4x4::rotate_y(float degrees){
 /*!
     Loads the Identity and rotates it around it's Z-axis by \a degrees.
 */
-void Matrix4x4::rotate_z(float degrees){
+void Matrix4x4::rotate_z(double degrees){
     set_to_identity();
 
-    float radians = degreesToRadians(degrees);
+    double radians = degreesToRadians(degrees);
 
     // Rotate Z formula.
     mat4[0] = cos(radians);
@@ -210,6 +210,117 @@ void Matrix4x4::rotate_z(float degrees){
     mat4[5] = mat4[0];
     flagBits = Rotation;
 }
+
+
+
+
+void Matrix4x4::rotate(double angle, const Vector3& vector)
+{
+    rotate(angle, vector.x(), vector.y(), vector.z());
+}
+
+void Matrix4x4::rotate(double angle, double x, double y, double z)
+{
+    if (angle == 0.0f)
+        return;
+    Matrix4x4 m(1); // The "1" says to not load the identity.
+    double c, s, ic;
+    if (angle == 90.0 || angle == -270.0) {
+        s = 1.0;
+        c = 0.0;
+    } else if (angle == -90.0 || angle == 270.0) {
+        s = -1.0;
+        c = 0.0;
+    } else if (angle == 180.0 || angle == -180.0) {
+        s = 0.0;
+        c = -1.0;
+    } else {
+        double a = angle * M_PI / 180.0;
+        c = cos(a);
+        s = sin(a);
+    }
+    bool quick = false;
+    if (x == 0.0) {
+        if (y == 0.0) {
+            if (z != 0.0) {
+                // Rotate around the Z axis.
+                m.set_to_identity();
+                m.mat4[0] = c;
+                m.mat4[5] = c;
+                if (z < 0.0) {
+                    m.mat4[4] = s;
+                    m.mat4[1] = -s;
+                } else {
+                    m.mat4[4] = -s;
+                    m.mat4[1] = s;
+                }
+                m.flagBits = General;
+                quick = true;
+            }
+        } else if (z == 0.0) {
+            // Rotate around the Y axis.
+            m.set_to_identity();
+            m.mat4[0] = c;
+            m.mat4[10] = c;
+            if (y < 0.0) {
+                m.mat4[8] = -s;
+                m.mat4[2] = s;
+            } else {
+                m.mat4[8] = s;
+                m.mat4[2] = -s;
+            }
+            m.flagBits = General;
+            quick = true;
+        }
+    } else if (y == 0.0 && z == 0.0) {
+        // Rotate around the X axis.
+        m.set_to_identity();
+        m.mat4[5] = c;
+        m.mat4[10] = c;
+        if (x < 0.0) {
+            m.mat4[9] = s;
+            m.mat4[6] = -s;
+        } else {
+            m.mat4[9] = -s;
+            m.mat4[6] = s;
+        }
+        m.flagBits = General;
+        quick = true;
+    }
+    if (!quick) {
+        double len = x * x + y * y + z * z;
+        if (!qFuzzyIsNull(len - 1.0) && !qFuzzyIsNull(len)) {
+            len = sqrt(len);
+            x /= len;
+            y /= len;
+            z /= len;
+        }
+        ic = 1.0 - c;
+        m.mat4[0] = x * x * ic + c;
+        m.mat4[4] = x * y * ic - z * s;
+        m.mat4[8] = x * z * ic + y * s;
+        m.mat4[12] = 0.0;
+        m.mat4[1] = y * x * ic + z * s;
+        m.mat4[5] = y * y * ic + c;
+        m.mat4[9] = y * z * ic - x * s;
+        m.mat4[13] = 0.0;
+        m.mat4[2] = x * z * ic - y * s;
+        m.mat4[6] = y * z * ic + x * s;
+        m.mat4[10] = z * z * ic + c;
+        m.mat4[14] = 0.0;
+        m.mat4[3] = 0.0;
+        m.mat4[7] = 0.0;
+        m.mat4[11] = 0.0;
+        m.mat4[15] = 1.0;
+    }
+    int flags = flagBits;
+    *this *= m;
+    if (flags != Identity)
+        flagBits = flags | Rotation;
+    else
+        flagBits = Rotation;
+}
+
 
 /*!
     Multiplyies the matrix with \a mat in prefix order.
@@ -231,7 +342,7 @@ void Matrix4x4::post_multiply(Matrix4x4 mat){
 //     | A B C |
 // M = | D E F |   det(M) = A * (EI - HF) - B * (DI - GF) + C * (DH - GE)
 //     | G H I |
-static inline float matrixDet3 (const float mat4[16], int row0, int row1, int row2,
+static inline double matrixDet3 (const double mat4[16], int row0, int row1, int row2,
      int col0, int col1, int col2)
 {
     return mat4[4*row0+col0] *
@@ -246,9 +357,9 @@ static inline float matrixDet3 (const float mat4[16], int row0, int row1, int ro
 }
 
 // Calculate the determinant of a 4x4 matrix.
-static inline float matrixDet4(const float mat4[16])
+static inline double matrixDet4(const double mat4[16])
 {
-    float det;
+    double det;
     det  = mat4[0] * matrixDet3(mat4, 1, 2, 3, 1, 2, 3);
     det -= mat4[4] * matrixDet3(mat4, 0, 2, 3, 1, 2, 3);
     det += mat4[8] * matrixDet3(mat4, 0, 1, 3, 1, 2, 3);
@@ -263,8 +374,8 @@ static inline float matrixDet4(const float mat4[16])
     Some optimization has been done to avoid making copies of 3x3
     sub-matrices and to unroll the loops.
 */
-float Matrix4x4::determinant() const{
-    return float(matrixDet4(mat4));
+double Matrix4x4::determinant() const{
+    return double(matrixDet4(mat4));
 }
 
 // Helper routine for inverting orthonormal matrices that consist
@@ -388,20 +499,20 @@ Matrix3x3 Matrix4x4::normalMatrix() const{
     if (flagBits == Identity || flagBits == Translation) {
         return inv;
     } else if (flagBits == Scale || flagBits == (Translation | Scale)) {
-        if (mat4[0] == 0.0f || mat4[5] == 0.0f || mat4[10] == 0.0f)
+        if (mat4[0] == 0.0 || mat4[5] == 0.0 || mat4[10] == 0.0)
             return inv;
-        inv[0] = 1.0f / mat4[0];
-        inv[4] = 1.0f / mat4[5];
-        inv[8] = 1.0f / mat4[10];
+        inv[0] = 1.0 / mat4[0];
+        inv[4] = 1.0 / mat4[5];
+        inv[8] = 1.0 / mat4[10];
         return inv;
     }
 
-    float det = matrixDet3(mat4, 0, 1, 2, 0, 1, 2);
-    if (det == 0.0f)
+    double det = matrixDet3(mat4, 0, 1, 2, 0, 1, 2);
+    if (det == 0.0)
         return inv;
-    det = 1.0f / det;
+    det = 1.0 / det;
 
-    float *invm = inv.get_array();
+    double *invm = inv.get_array();
 
     // Invert and transpose in a single step.
     invm[0 + 0 * 3] =  (mat4[5] * mat4[10] - mat4[9] * mat4[6]) * det;
@@ -433,15 +544,15 @@ void Matrix4x4::rotate(const Quaternion& quaternion)
     // Algorithm from:
     // http://www.j3d.org/matrix_faq/matrfaq_latest.html#Q54
     Matrix4x4 m(1);
-    float xx = quaternion.x() * quaternion.x();
-    float xy = quaternion.x() * quaternion.y();
-    float xz = quaternion.x() * quaternion.z();
-    float xw = quaternion.x() * quaternion.scalar();
-    float yy = quaternion.y() * quaternion.y();
-    float yz = quaternion.y() * quaternion.z();
-    float yw = quaternion.y() * quaternion.scalar();
-    float zz = quaternion.z() * quaternion.z();
-    float zw = quaternion.z() * quaternion.scalar();
+    double xx = quaternion.x() * quaternion.x();
+    double xy = quaternion.x() * quaternion.y();
+    double xz = quaternion.x() * quaternion.z();
+    double xw = quaternion.x() * quaternion.scalar();
+    double yy = quaternion.y() * quaternion.y();
+    double yz = quaternion.y() * quaternion.z();
+    double yw = quaternion.y() * quaternion.scalar();
+    double zz = quaternion.z() * quaternion.z();
+    double zw = quaternion.z() * quaternion.scalar();
     m(0,0) = 1.0f - 2 * (yy + zz);
     m(1,0) =        2 * (xy - zw);
     m(2,0) =        2 * (xz + yw);
@@ -477,15 +588,15 @@ void Matrix4x4::rotate(const Quaternion& quaternion)
 
     \sa frustum(), perspective()
 */
-void Matrix4x4::ortho(float left, float right, float bottom, float top, float nearPlane, float farPlane){
+void Matrix4x4::ortho(double left, double right, double bottom, double top, double nearPlane, double farPlane){
     // Bail out if the projection volume is zero-sized.
     if (left == right || bottom == top || nearPlane == farPlane)
         return;
 
     // Construct the projection.
-    float width = right - left;
-    float invheight = top - bottom;
-    float clip = farPlane - nearPlane;
+    double width = right - left;
+    double invheight = top - bottom;
+    double clip = farPlane - nearPlane;
 
     //Vector class is incomplete and thus functions are missing...
     //A more efficient way of ortho projection...
@@ -508,22 +619,22 @@ void Matrix4x4::ortho(float left, float right, float bottom, float top, float ne
     */
 
     Matrix4x4 m(1);
-    m(0,0) = 2.0f / width;
-    m(1,0) = 0.0f;
-    m(2,0) = 0.0f;
+    m(0,0) = 2.0 / width;
+    m(1,0) = 0.0;
+    m(2,0) = 0.0;
     m(3,0) = -(left + right) / width;
-    m(0,1) = 0.0f;
-    m(1,1) = 2.0f / invheight;
-    m(2,1) = 0.0f;
+    m(0,1) = 0.0;
+    m(1,1) = 2.0 / invheight;
+    m(2,1) = 0.0;
     m(3,1) = -(top + bottom) / invheight;
-    m(0,2) = 0.0f;
-    m(1,2) = 0.0f;
-    m(2,2) = -2.0f / clip;
+    m(0,2) = 0.0;
+    m(1,2) = 0.0;
+    m(2,2) = -2.0 / clip;
     m(3,2) = -(nearPlane + farPlane) / clip;
-    m(0,3) = 0.0f;
-    m(1,3) = 0.0f;
-    m(2,3) = 0.0f;
-    m(3,3) = 1.0f;
+    m(0,3) = 0.0;
+    m(1,3) = 0.0;
+    m(2,3) = 0.0;
+    m(3,3) = 1.0;
 
     // Apply the projection.
     *this *= m;
@@ -538,32 +649,32 @@ void Matrix4x4::ortho(float left, float right, float bottom, float top, float ne
 
     \sa ortho(), perspective()
 */
-void Matrix4x4::frustum(float left, float right, float bottom, float top, float nearPlane, float farPlane){
+void Matrix4x4::frustum(double left, double right, double bottom, double top, double nearPlane, double farPlane){
     // Bail out if the projection volume is zero-sized.
     if (left == right || bottom == top || nearPlane == farPlane)
         return;
 
     // Construct the projection.
     Matrix4x4 m(1);
-    float width = right - left;
-    float invheight = top - bottom;
-    float clip = farPlane - nearPlane;
-    m(0,0) = 2.0f * nearPlane / width;
-    m(1,0) = 0.0f;
+    double width = right - left;
+    double invheight = top - bottom;
+    double clip = farPlane - nearPlane;
+    m(0,0) = 2.0 * nearPlane / width;
+    m(1,0) = 0.0;
     m(2,0) = (left + right) / width;
-    m(3,0) = 0.0f;
-    m(0,1) = 0.0f;
-    m(1,1) = 2.0f * nearPlane / invheight;
+    m(3,0) = 0.0;
+    m(0,1) = 0.0;
+    m(1,1) = 2.0 * nearPlane / invheight;
     m(2,1) = (top + bottom) / invheight;
-    m(3,1) = 0.0f;
-    m(0,2) = 0.0f;
-    m(1,2) = 0.0f;
+    m(3,1) = 0.0;
+    m(0,2) = 0.0;
+    m(1,2) = 0.0;
     m(2,2) = -(nearPlane + farPlane) / clip;
-    m(3,2) = -2.0f * nearPlane * farPlane / clip;
-    m(0,3) = 0.0f;
-    m(1,3) = 0.0f;
-    m(2,3) = -1.0f;
-    m(3,3) = 0.0f;
+    m(3,2) = -2.0 * nearPlane * farPlane / clip;
+    m(0,3) = 0.0;
+    m(1,3) = 0.0;
+    m(2,3) = -1.0;
+    m(3,3) = 0.0;
 
     // Apply the projection.
     *this *= m;
@@ -577,35 +688,35 @@ void Matrix4x4::frustum(float left, float right, float bottom, float top, float 
 
     \sa ortho(), frustum()
 */
-void Matrix4x4::perspective(float angle, float aspect, float nearPlane, float farPlane){
+void Matrix4x4::perspective(double angle, double aspect, double nearPlane, double farPlane){
     // Bail out if the projection volume is zero-sized.
-    if (nearPlane == farPlane || aspect == 0.0f)
+    if (nearPlane == farPlane || aspect == 0.0)
         return;
 
     // Construct the projection.
     Matrix4x4 m(1);
-    float radians = (angle / 2.0f) * M_PI / 180.0f;
-    float sine = sin(radians);
-    if (sine == 0.0f)
+    double radians = (angle / 2.0) * M_PI / 180.0;
+    double sine = sin(radians);
+    if (sine == 0.0)
         return;
-    float cotan = cos(radians) / sine;
-    float clip = farPlane - nearPlane;
+    double cotan = cos(radians) / sine;
+    double clip = farPlane - nearPlane;
     m(0,0) = cotan / aspect;
-    m(1,0) = 0.0f;
-    m(2,0) = 0.0f;
-    m(3,0) = 0.0f;
-    m(0,1) = 0.0f;
+    m(1,0) = 0.0;
+    m(2,0) = 0.0;
+    m(3,0) = 0.0;
+    m(0,1) = 0.0;
     m(1,1) = cotan;
-    m(2,1) = 0.0f;
-    m(3,1) = 0.0f;
-    m(0,2) = 0.0f;
-    m(1,2) = 0.0f;
+    m(2,1) = 0.0;
+    m(3,1) = 0.0;
+    m(0,2) = 0.0;
+    m(1,2) = 0.0;
     m(2,2) = -(nearPlane + farPlane) / clip;
-    m(3,2) = -(2.0f * nearPlane * farPlane) / clip;
-    m(0,3) = 0.0f;
-    m(1,3) = 0.0f;
-    m(2,3) = -1.0f;
-    m(3,3) = 0.0f;
+    m(3,2) = -(2.0 * nearPlane * farPlane) / clip;
+    m(0,3) = 0.0;
+    m(1,3) = 0.0;
+    m(2,3) = -1.0;
+    m(3,3) = 0.0;
 
     // Apply the projection.
     *this *= m;
@@ -660,9 +771,9 @@ Matrix3x3 Matrix4x4::rotationMatrix() const{
 /*!
     Sets the given \a value at the \a index in the matrix.
 */
-void Matrix4x4::set_value(int index, float value){
+void Matrix4x4::set_value(int index, double value){
     if(index < 0 || index > 15){
-        qDebug("void Matrix4x4::set_value(int index, float value) has a wrong index: %i", index);
+        qDebug("void Matrix4x4::set_value(int index, double value) has a wrong index: %i", index);
         return;
     }
     mat4[index] = value;
@@ -672,25 +783,25 @@ void Matrix4x4::set_value(int index, float value){
 /*!
     Returns the value at the given \a index.
 */
-float Matrix4x4::get_value(int index){
+double Matrix4x4::get_value(int index){
     if(index < 0 || index > 15){
-        qDebug("float Matrix4x4::get_value(int index) has a wrong index: %i", index);
+        qDebug("double Matrix4x4::get_value(int index) has a wrong index: %i", index);
         return 0;
     }
     return mat4[index];
 }
 
 /*!
-    Returns the matrix as an array of floats.
+    Returns the matrix as an array of doubles.
 */
-float* Matrix4x4::get_array(){
+double* Matrix4x4::get_array(){
     return mat4;
 }
 
 /*!
     Sets the components of the matrix to the values stored int the \a mat4 array.
 */
-void Matrix4x4::set_array(float mat4[]){
+void Matrix4x4::set_array(double mat4[]){
     this->mat4[0] = mat4[0];
     this->mat4[1] = mat4[1];
     this->mat4[2] = mat4[2];
@@ -738,11 +849,6 @@ Vector3 Matrix4x4::get_vector_scale(){
 
 
 
-
-
-
-
-
 /*!
     Outputs the matrix in the console by using Qt's qDebug() function.
 */
@@ -761,10 +867,10 @@ void Matrix4x4::debug(){
 /*!
     For easier access to the values of the matrix you can use this function.
 */
-const float& Matrix4x4::operator[](int index) const
+const double& Matrix4x4::operator[](int index) const
 {
     if(index < 0 && index > 15){
-        qDebug("const float& Matrix4x4::operator()(int index) has a wrong index: %i", index);
+        qDebug("const double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
     }
     return mat4[index];
 }
@@ -772,33 +878,10 @@ const float& Matrix4x4::operator[](int index) const
 /*!
     For easier access to the values of the matrix you can use this function.
 */
-float& Matrix4x4::operator[](int index)
+double& Matrix4x4::operator[](int index)
 {
     if(index < 0 && index > 15){
-        qDebug("float& Matrix4x4::operator()(int index) has a wrong index: %i", index);
-    }
-    flagBits = General;
-    return mat4[index];
-}
-
-/*!
-    For easier access to the values of the matrix you can use this function.
-*/
-const float& Matrix4x4::operator()(int index) const
-{
-    if(index < 0 && index > 15){
-        qDebug("const float& Matrix4x4::operator()(int index) has a wrong index: %i", index);
-    }
-    return mat4[index];
-}
-
-/*!
-    For easier access to the values of the matrix you can use this function.
-*/
-float& Matrix4x4::operator()(int index)
-{
-    if(index < 0 && index > 15){
-        qDebug("float& Matrix4x4::operator()(int index) has a wrong index: %i", index);
+        qDebug("double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
     }
     flagBits = General;
     return mat4[index];
@@ -807,10 +890,33 @@ float& Matrix4x4::operator()(int index)
 /*!
     For easier access to the values of the matrix you can use this function.
 */
-const float& Matrix4x4::operator()(int aRow, int aColumn) const
+const double& Matrix4x4::operator()(int index) const
+{
+    if(index < 0 && index > 15){
+        qDebug("const double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
+    }
+    return mat4[index];
+}
+
+/*!
+    For easier access to the values of the matrix you can use this function.
+*/
+double& Matrix4x4::operator()(int index)
+{
+    if(index < 0 && index > 15){
+        qDebug("double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
+    }
+    flagBits = General;
+    return mat4[index];
+}
+
+/*!
+    For easier access to the values of the matrix you can use this function.
+*/
+const double& Matrix4x4::operator()(int aRow, int aColumn) const
 {
     if(aRow < 0 && aRow > 3 && aColumn < 0 && aColumn > 3){
-        qDebug("const float& Matrix4x4::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
+        qDebug("const double& Matrix4x4::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
     }
     return mat4[aColumn+aRow*4];
 }
@@ -818,10 +924,10 @@ const float& Matrix4x4::operator()(int aRow, int aColumn) const
 /*!
     For easier access to the values of the matrix you can use this function.
 */
-float& Matrix4x4::operator()(int aRow, int aColumn)
+double& Matrix4x4::operator()(int aRow, int aColumn)
 {
     if(aRow < 0 && aRow > 3 && aColumn < 0 && aColumn > 3){
-        qDebug("float& Matrix4x4::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
+        qDebug("double& Matrix4x4::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
     }
     flagBits = General;
     return mat4[aColumn+aRow*4];
@@ -866,7 +972,7 @@ Matrix4x4 operator+(const Matrix4x4& m1, const Matrix4x4& m2){
 /*!
     Adds the \a value to itself and returns itself.
 */
-Matrix4x4& Matrix4x4::operator+=(const float& value){
+Matrix4x4& Matrix4x4::operator+=(const double& value){
     *this = *this + value;
     return *this;
 }
@@ -874,7 +980,7 @@ Matrix4x4& Matrix4x4::operator+=(const float& value){
 /*!
     Adds the \a value to \a m1 matrix and returns the result.
 */
-Matrix4x4 operator+(const Matrix4x4& m1, const float& value){
+Matrix4x4 operator+(const Matrix4x4& m1, const double& value){
     Matrix4x4 m(1);
     m.mat4[0] = m1.mat4[0] + value;
     m.mat4[1] = m1.mat4[1] + value;
@@ -899,7 +1005,7 @@ Matrix4x4 operator+(const Matrix4x4& m1, const float& value){
 /*!
     Adds the \a m1 and \a m2 matrix and returns the result.
 */
-Matrix4x4 operator+(const float& value, const Matrix4x4& m1){
+Matrix4x4 operator+(const double& value, const Matrix4x4& m1){
     return m1 + value;
 }
 
@@ -987,7 +1093,7 @@ Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2){
 /*!
     Multiplys the matrix with a \a multiplier. Scales all matrix values.
 */
-Matrix4x4& Matrix4x4::operator*=(const float& multiplier){
+Matrix4x4& Matrix4x4::operator*=(const double& multiplier){
     *this = *this * multiplier;
     return *this;
 }
@@ -995,7 +1101,7 @@ Matrix4x4& Matrix4x4::operator*=(const float& multiplier){
 /*!
     Multiplys \a m1 with a \a multiplier and returns the result. Scales all matrix values.
 */
-Matrix4x4 operator*(const Matrix4x4& m1, const float& multiplier){
+Matrix4x4 operator*(const Matrix4x4& m1, const double& multiplier){
 
 
     if(m1.flagBits == Matrix4x4::Identity){
@@ -1038,9 +1144,9 @@ Matrix4x4 operator*(const Matrix4x4& m1, const float& multiplier){
     Multiplys \a m1 with a \a multiplier and returns the result. Scales all matrix values.
     Actually just a kommutative way of the above function.
 
-    \sa operator*(const Matrix4x4& m1, const float& multiplier)
+    \sa operator*(const Matrix4x4& m1, const double& multiplier)
 */
-Matrix4x4 operator*(const float& multiplier, const Matrix4x4& m1){
+Matrix4x4 operator*(const double& multiplier, const Matrix4x4& m1){
     return m1 * multiplier;
 }
 
@@ -1048,7 +1154,7 @@ Matrix4x4 operator*(const float& multiplier, const Matrix4x4& m1){
 /*!
     Divides the matrix with a \a divisor. Scales all matrix values.
 */
-Matrix4x4& Matrix4x4::operator/=(const float& divisor){
+Matrix4x4& Matrix4x4::operator/=(const double& divisor){
     *this = *this / divisor;
     return *this;
 }
@@ -1056,7 +1162,7 @@ Matrix4x4& Matrix4x4::operator/=(const float& divisor){
 /*!
     Divides \a m1 with a \a divisor and returns the result. Scales all matrix values.
 */
-Matrix4x4 operator/(const Matrix4x4& m1, const float& divisor){
+Matrix4x4 operator/(const Matrix4x4& m1, const double& divisor){
 
 
     if(m1.flagBits == Matrix4x4::Identity){
@@ -1100,7 +1206,7 @@ Matrix4x4 operator/(const Matrix4x4& m1, const float& divisor){
 //Vector4
 Vector4 operator*(const Vector4& vector, const Matrix4x4& matrix)
 {
-    float x, y, z, w;
+    double x, y, z, w;
     x = vector.x() * matrix.mat4[0] +
         vector.y() * matrix.mat4[1] +
         vector.z() * matrix.mat4[2] +
@@ -1122,7 +1228,7 @@ Vector4 operator*(const Vector4& vector, const Matrix4x4& matrix)
 
 Vector4 operator*(const Matrix4x4& matrix, const Vector4& vector)
 {
-    float x, y, z, w;
+    double x, y, z, w;
     x = vector.x() * matrix.mat4[0] +
         vector.y() * matrix.mat4[4] +
         vector.z() * matrix.mat4[8] +
@@ -1145,7 +1251,7 @@ Vector4 operator*(const Matrix4x4& matrix, const Vector4& vector)
 //Vector3
 Vector3 operator*(const Vector3& vector, const Matrix4x4& matrix)
 {
-    float x, y, z, w;
+    double x, y, z, w;
     x = vector.x() * matrix.mat4[0] +
         vector.y() * matrix.mat4[1] +
         vector.z() * matrix.mat4[2] +
@@ -1170,7 +1276,7 @@ Vector3 operator*(const Vector3& vector, const Matrix4x4& matrix)
 
 Vector3 operator*(const Matrix4x4& matrix, const Vector3& vector)
 {
-    float x, y, z, w;
+    double x, y, z, w;
     if (matrix.flagBits == Matrix4x4::Identity) {
         return vector;
     } else if (matrix.flagBits == Matrix4x4::Translation) {
