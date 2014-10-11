@@ -49,8 +49,6 @@ Projecting a point to a plane
 Credits to: http://www.lighthouse3d.com
 */
 
-class Vector3;
-
 class Plane
 {
 public:

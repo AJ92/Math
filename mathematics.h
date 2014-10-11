@@ -1,5 +1,5 @@
-#ifndef MATH_H
-#define MATH_H
+#ifndef MATHEMATICS_H
+#define MATHEMATICS_H
 
 #include <cmath>
 
@@ -15,14 +15,19 @@
 // Converts radians to degrees.
 #define radiansToDegrees(x) (x * k180PI)
 
+
+#ifndef MATHEMATICS_VECTOR_H
+#define MATHEMATICS_VECTOR_H
 #include "Vector/vector3.h"
 #include "Vector/vector4.h"
+#endif // MATHEMATICS_VECTOR_H
 
+#ifndef MATHEMATICS_MATRIX_H
+#define MATHEMATICS_MATRIX_H
 #include "Matrix/matrix3x3.h"
 #include "Matrix/matrix4x4.h"
+#endif // MATHEMATICS_MATRIX_H
 
 
 
-
-
-#endif // MATH_H
+#endif // MATHEMATICS_H
