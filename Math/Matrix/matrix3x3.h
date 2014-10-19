@@ -3,10 +3,12 @@
 
 #include <QDebug>
 
-#include "Math/Vector/vector3.h"
-#include "Math/Vector/vector4.h"
-#include "Math/Matrix/Matrix4x4.h"
-#include "Math/mathematics.h"
+#include "Vector/vector3.h"
+#include "Vector/vector4.h"
+#include "Matrix/Matrix4x4.h"
+#include "mathematics.h"
+
+#include "mathematics_global.h"
 
 /*column-major notation for openGL use...
   but using in code row-major notation for indizes...
@@ -24,7 +26,7 @@
 */
 
 
-class Matrix3x3
+class MATHEMATICSSHARED_EXPORT Matrix3x3
 {
 public:
     //Multi-purpose constructors:

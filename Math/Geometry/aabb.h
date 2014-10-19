@@ -1,9 +1,11 @@
 #ifndef AABB_H
 #define AABB_H
 
-#include "Math/mathematics.h"
+#include "mathematics.h"
 
-class AABB
+#include "mathematics_global.h"
+
+class MATHEMATICSSHARED_EXPORT AABB
 {
 public:
     AABB();

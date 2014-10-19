@@ -1,9 +1,11 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "Math/mathematics.h"
+#include "mathematics.h"
 
-class Sphere
+#include "mathematics_global.h"
+
+class MATHEMATICSSHARED_EXPORT Sphere
 {
 public:
     Sphere();

@@ -1,7 +1,9 @@
 #ifndef PLANE_H
 #define PLANE_H
 
-#include "Math/mathematics.h"
+#include "mathematics.h"
+
+#include "mathematics_global.h"
 
 /*
 
@@ -49,7 +51,7 @@ Projecting a point to a plane
 Credits to: http://www.lighthouse3d.com
 */
 
-class Plane
+class MATHEMATICSSHARED_EXPORT Plane
 {
 public:
     //dummy constructor

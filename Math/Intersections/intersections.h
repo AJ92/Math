@@ -1,10 +1,13 @@
 #ifndef INTERSECTIONS_H
 #define INTERSECTIONS_H
 
-#include "Math/Geometry/aabb.h"
-#include "Math/Geometry/sphere.h"
+#include "Geometry/aabb.h"
+#include "Geometry/sphere.h"
 
-class Intersections
+#include "mathematics_global.h"
+
+
+class MATHEMATICSSHARED_EXPORT Intersections
 {
 public:
     Intersections();

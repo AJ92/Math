@@ -1,6 +1,7 @@
 #ifndef MATHEMATICS_H
 #define MATHEMATICS_H
 
+
 #include <cmath>
 
 // Pre-calculated value of PI / 180.
