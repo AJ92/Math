@@ -451,7 +451,9 @@ Matrix3x3 operator/(const Matrix3x3& m1, const double& divisor){
 
     if(m1.flagBits == Matrix3x3::Identity){
         Matrix3x3 m_i;
-        m_i.mat3[0] = m_i.mat3[4]  = m_i.mat3[8] = divisor;
+        m_i.mat3[0] /= divisor;
+        m_i.mat3[4] /= divisor;
+        m_i.mat3[8] /= divisor;
         return m_i;
     }
 
