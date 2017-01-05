@@ -1,7 +1,6 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include <QDebug>
 #include "mathematics.h"
 #include "mathematics_global.h"
 
@@ -66,11 +65,11 @@ public:
     double& operator()(int index);
 
 
-    MATHEMATICSSHARED_EXPORT Vector3 &operator+=(const Vector3 &vector);
-    MATHEMATICSSHARED_EXPORT Vector3 &operator-=(const Vector3 &vector);
-    MATHEMATICSSHARED_EXPORT Vector3 &operator*=(double factor);
-    MATHEMATICSSHARED_EXPORT Vector3 &operator*=(const Vector3 &vector);
-    MATHEMATICSSHARED_EXPORT Vector3 &operator/=(double divisor);
+    Vector3 &operator+=(const Vector3 &vector);
+    Vector3 &operator-=(const Vector3 &vector);
+    Vector3 &operator*=(double factor);
+    Vector3 &operator*=(const Vector3 &vector);
+    Vector3 &operator/=(double divisor);
 
     static double dotProduct(const Vector3& v1, const Vector3& v2);
     static Vector3 crossProduct(const Vector3& v1, const Vector3& v2);
@@ -78,20 +77,20 @@ public:
     static Vector3 normal(const Vector3& v1, const Vector3& v2, const Vector3& v3);
 
 
-    MATHEMATICSSHARED_EXPORT friend bool operator==(const Vector3 &v1, const Vector3 &v2);
-    MATHEMATICSSHARED_EXPORT friend bool operator!=(const Vector3 &v1, const Vector3 &v2);
-    MATHEMATICSSHARED_EXPORT friend const Vector3 operator+(const Vector3 &v1, const Vector3 &v2);
-    MATHEMATICSSHARED_EXPORT friend const Vector3 operator-(const Vector3 &v1, const Vector3 &v2);
-    MATHEMATICSSHARED_EXPORT friend const Vector3 operator*(double factor, const Vector3 &vector);
-    MATHEMATICSSHARED_EXPORT friend const Vector3 operator*(const Vector3 &vector, double factor);
-    MATHEMATICSSHARED_EXPORT friend const Vector3 operator*(const Vector3 &v1, const Vector3& v2);
-    MATHEMATICSSHARED_EXPORT friend const Vector3 operator-(const Vector3 &vector);
-    MATHEMATICSSHARED_EXPORT friend const Vector3 operator/(const Vector3 &vector, double divisor);
+    friend bool operator==(const Vector3 &v1, const Vector3 &v2);
+    friend bool operator!=(const Vector3 &v1, const Vector3 &v2);
+    friend const Vector3 operator+(const Vector3 &v1, const Vector3 &v2);
+    friend const Vector3 operator-(const Vector3 &v1, const Vector3 &v2);
+    friend const Vector3 operator*(double factor, const Vector3 &vector);
+    friend const Vector3 operator*(const Vector3 &vector, double factor);
+    friend const Vector3 operator*(const Vector3 &v1, const Vector3& v2);
+    friend const Vector3 operator-(const Vector3 &vector);
+    friend const Vector3 operator/(const Vector3 &vector, double divisor);
 
 
     //Matrix stuff
-    MATHEMATICSSHARED_EXPORT friend Vector3 operator*(const Vector3& vector, const Matrix4x4& matrix);
-    MATHEMATICSSHARED_EXPORT friend Vector3 operator*(const Matrix4x4& matrix, const Vector3& vector);
+    friend Vector3 operator*(const Vector3& vector, const Matrix4x4& matrix);
+    friend Vector3 operator*(const Matrix4x4& matrix, const Vector3& vector);
 
 
 private:

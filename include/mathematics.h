@@ -17,6 +17,11 @@
 #define radiansToDegrees(x) (x * k180PI)
 
 
+#ifndef MATHEMATICS_HELPER_H
+#define MATHEMATICS_HELPER_H
+#include "Helper/helper.h"
+#endif // MATHEMATICS_HELPER_H
+
 #ifndef MATHEMATICS_VECTOR_H
 #define MATHEMATICS_VECTOR_H
 #include "Vector/vector3.h"

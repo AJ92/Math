@@ -41,7 +41,7 @@ bool Vector3::is_null() const{
 
 void Vector3::set_value(int index, double value){
     if(index < 0 && index > 2){
-        qDebug("void Vector3::set_value(int index, double value) has a wrong index: %i", index);
+        //qDebug("void Vector3::set_value(int index, double value) has a wrong index: %i", index);
         return;
     }
     vec3[index] = value;
@@ -49,7 +49,7 @@ void Vector3::set_value(int index, double value){
 
 double Vector3::get_value(int index){
     if(index < 0 && index > 2){
-        qDebug("double Vector3::get_value(int index) has a wrong index: %i", index);
+        //qDebug("double Vector3::get_value(int index) has a wrong index: %i", index);
         return 0;
     }
     return vec3[index];
@@ -127,14 +127,14 @@ double Vector3::distance(Vector3 vector){
 
 const double& Vector3::operator[](int index) const{
     if(index < 0 && index > 2){
-        qDebug("const double& Vector3::operator[](int index) const has a wrong index: %i", index);
+        //qDebug("const double& Vector3::operator[](int index) const has a wrong index: %i", index);
     }
     return vec3[index];
 }
 
 double& Vector3::operator[](int index){
     if(index < 0 && index > 2){
-        qDebug("double& Vector3::operator[](int index) has a wrong index: %i", index);
+        //qDebug("double& Vector3::operator[](int index) has a wrong index: %i", index);
     }
     //var can be modified after return...
     return vec3[index];
@@ -143,14 +143,14 @@ double& Vector3::operator[](int index){
 
 const double& Vector3::operator()(int index) const{
     if(index < 0 && index > 2){
-        qDebug("const double& Vector3::operator()(int index) const has a wrong index: %i", index);
+        //qDebug("const double& Vector3::operator()(int index) const has a wrong index: %i", index);
     }
     return vec3[index];
 }
 
 double& Vector3::operator()(int index){
     if(index < 0 && index > 2){
-        qDebug("double& Vector3::operator()(int index) has a wrong index: %i", index);
+        //qDebug("double& Vector3::operator()(int index) has a wrong index: %i", index);
     }
     //var can be modified after return...
     return vec3[index];

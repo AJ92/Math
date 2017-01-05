@@ -1,7 +1,6 @@
 #ifndef MATRIX3X3_H
 #define MATRIX3X3_H
 
-#include <QDebug>
 
 #include "Vector/vector3.h"
 #include "Vector/vector4.h"
@@ -60,25 +59,25 @@ public:
     const double& operator()(int row, int column) const;
     double& operator()(int row, int column);
 
-    Matrix3x3& operator+=(const Matrix3x3& other);
-    friend Matrix3x3 operator+(const Matrix3x3& m1, const Matrix3x3& m2);
+	Matrix3x3& operator+=(const Matrix3x3& other);
+	MATHEMATICSSHARED_EXPORT friend Matrix3x3 operator+(const Matrix3x3& m1, const Matrix3x3& m2);
 
     Matrix3x3& operator+=(const double& value);
-    friend Matrix3x3 operator+(const Matrix3x3& m1, const double& value);
-    friend Matrix3x3 operator+(const double& value, const Matrix3x3& m1);
+	MATHEMATICSSHARED_EXPORT friend Matrix3x3 operator+(const Matrix3x3& m1, const double& value);
+	MATHEMATICSSHARED_EXPORT friend Matrix3x3 operator+(const double& value, const Matrix3x3& m1);
 
     Matrix3x3& operator-=(const Matrix3x3& other);
-    friend Matrix3x3 operator-(const Matrix3x3& m1, const Matrix3x3& m2);
+	MATHEMATICSSHARED_EXPORT friend Matrix3x3 operator-(const Matrix3x3& m1, const Matrix3x3& m2);
 
     Matrix3x3& operator*=(const Matrix3x3& other);
-    friend Matrix3x3 operator*(const Matrix3x3& m1, const Matrix3x3& m2);
+	MATHEMATICSSHARED_EXPORT friend Matrix3x3 operator*(const Matrix3x3& m1, const Matrix3x3& m2);
 
     Matrix3x3& operator*=(const double& multiplier);
-    friend Matrix3x3 operator*(const Matrix3x3& m1, const double& multiplier);
-    friend Matrix3x3 operator*(const double& multiplier, const Matrix3x3& m1);
+	MATHEMATICSSHARED_EXPORT friend Matrix3x3 operator*(const Matrix3x3& m1, const double& multiplier);
+	MATHEMATICSSHARED_EXPORT friend Matrix3x3 operator*(const double& multiplier, const Matrix3x3& m1);
 
     Matrix3x3& operator/=(const double& divisor);
-    friend Matrix3x3 operator/(const Matrix3x3& m1, const double& divisor);
+	MATHEMATICSSHARED_EXPORT friend Matrix3x3 operator/(const Matrix3x3& m1, const double& divisor);
 
 private:
     double mat3[9];

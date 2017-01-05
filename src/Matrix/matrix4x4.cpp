@@ -235,7 +235,7 @@ void Matrix4x4::rotate(double angle, double x, double y, double z)
         s = 0.0;
         c = -1.0;
     } else {
-        double a = angle * M_PI / 180.0;
+        double a = angle * kPI180;
         c = cos(a);
         s = sin(a);
     }
@@ -289,7 +289,7 @@ void Matrix4x4::rotate(double angle, double x, double y, double z)
     }
     if (!quick) {
         double len = x * x + y * y + z * z;
-        if (!qFuzzyIsNull(len - 1.0) && !qFuzzyIsNull(len)) {
+        if (!Helper::fuzzyIsNull(len - 1.0) && !Helper::fuzzyIsNull(len)) {
             len = sqrt(len);
             x /= len;
             y /= len;
@@ -445,7 +445,7 @@ Matrix4x4 Matrix4x4::inverted(bool *invertible) const{
 
     Matrix4x4 inv(1); // The "1" says to not load the identity.
 
-    qreal det = matrixDet4(mat4);
+    float det = matrixDet4(mat4);
     if (det == 0.0f) {
         if (invertible)
             *invertible = false;
@@ -695,7 +695,7 @@ void Matrix4x4::perspective(double angle, double aspect, double nearPlane, doubl
 
     // Construct the projection.
     Matrix4x4 m(1);
-    double radians = (angle / 2.0) * M_PI / 180.0;
+    double radians = (angle / 2.0) * kPI180;
     double sine = sin(radians);
     if (sine == 0.0)
         return;
@@ -773,7 +773,7 @@ Matrix3x3 Matrix4x4::rotationMatrix() const{
 */
 void Matrix4x4::set_value(int index, double value){
     if(index < 0 || index > 15){
-        qDebug("void Matrix4x4::set_value(int index, double value) has a wrong index: %i", index);
+        //qDebug("void Matrix4x4::set_value(int index, double value) has a wrong index: %i", index);
         return;
     }
     mat4[index] = value;
@@ -785,7 +785,7 @@ void Matrix4x4::set_value(int index, double value){
 */
 double Matrix4x4::get_value(int index){
     if(index < 0 || index > 15){
-        qDebug("double Matrix4x4::get_value(int index) has a wrong index: %i", index);
+        //qDebug("double Matrix4x4::get_value(int index) has a wrong index: %i", index);
         return 0;
     }
     return mat4[index];
@@ -853,11 +853,11 @@ Vector3 Matrix4x4::get_vector_scale(){
     Outputs the matrix in the console by using Qt's qDebug() function.
 */
 void Matrix4x4::debug(){
-    qDebug("Matrix:");
-    qDebug("%f  %f  %f  %f",mat4[0],mat4[1],mat4[2],mat4[3]);
-    qDebug("%f  %f  %f  %f",mat4[4],mat4[5],mat4[6],mat4[7]);
-    qDebug("%f  %f  %f  %f",mat4[8],mat4[9],mat4[10],mat4[11]);
-    qDebug("%f  %f  %f  %f",mat4[12],mat4[13],mat4[14],mat4[15]);
+    //qDebug("Matrix:");
+    //qDebug("%f  %f  %f  %f",mat4[0],mat4[1],mat4[2],mat4[3]);
+    //qDebug("%f  %f  %f  %f",mat4[4],mat4[5],mat4[6],mat4[7]);
+    //qDebug("%f  %f  %f  %f",mat4[8],mat4[9],mat4[10],mat4[11]);
+    //qDebug("%f  %f  %f  %f",mat4[12],mat4[13],mat4[14],mat4[15]);
 }
 
 
@@ -870,7 +870,7 @@ void Matrix4x4::debug(){
 const double& Matrix4x4::operator[](int index) const
 {
     if(index < 0 && index > 15){
-        qDebug("const double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
+        //qDebug("const double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
     }
     return mat4[index];
 }
@@ -881,7 +881,7 @@ const double& Matrix4x4::operator[](int index) const
 double& Matrix4x4::operator[](int index)
 {
     if(index < 0 && index > 15){
-        qDebug("double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
+        //qDebug("double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
     }
     flagBits = General;
     return mat4[index];
@@ -893,7 +893,7 @@ double& Matrix4x4::operator[](int index)
 const double& Matrix4x4::operator()(int index) const
 {
     if(index < 0 && index > 15){
-        qDebug("const double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
+        //qDebug("const double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
     }
     return mat4[index];
 }
@@ -904,7 +904,7 @@ const double& Matrix4x4::operator()(int index) const
 double& Matrix4x4::operator()(int index)
 {
     if(index < 0 && index > 15){
-        qDebug("double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
+        //qDebug("double& Matrix4x4::operator()(int index) has a wrong index: %i", index);
     }
     flagBits = General;
     return mat4[index];
@@ -916,7 +916,7 @@ double& Matrix4x4::operator()(int index)
 const double& Matrix4x4::operator()(int aRow, int aColumn) const
 {
     if(aRow < 0 && aRow > 3 && aColumn < 0 && aColumn > 3){
-        qDebug("const double& Matrix4x4::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
+        //qDebug("const double& Matrix4x4::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
     }
     return mat4[aColumn+aRow*4];
 }
@@ -927,7 +927,7 @@ const double& Matrix4x4::operator()(int aRow, int aColumn) const
 double& Matrix4x4::operator()(int aRow, int aColumn)
 {
     if(aRow < 0 && aRow > 3 && aColumn < 0 && aColumn > 3){
-        qDebug("double& Matrix4x4::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
+        //qDebug("double& Matrix4x4::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
     }
     flagBits = General;
     return mat4[aColumn+aRow*4];

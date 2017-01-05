@@ -1,12 +1,10 @@
 #ifndef MATHEMATICS_GLOBAL_H
 #define MATHEMATICS_GLOBAL_H
 
-#include <QtCore/qglobal.h>
-
 #if defined(MATHEMATICS_LIBRARY)
-#  define MATHEMATICSSHARED_EXPORT Q_DECL_EXPORT
+#  define MATHEMATICSSHARED_EXPORT __declspec(dllexport) 
 #else
-#  define MATHEMATICSSHARED_EXPORT Q_DECL_IMPORT
+#  define MATHEMATICSSHARED_EXPORT __declspec(dllimport) 
 #endif
 
 #endif // MATHEMATICS_GLOBAL_H

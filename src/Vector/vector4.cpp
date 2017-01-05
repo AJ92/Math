@@ -46,7 +46,7 @@ bool Vector4::is_null() const{
 
 void Vector4::set_value(int index, double value){
     if(index < 0 && index > 3){
-        qDebug("void Vector4::set_value(int index, double value) has a wrong index: %i", index);
+        //qDebug("void Vector4::set_value(int index, double value) has a wrong index: %i", index);
         return;
     }
     vec4[index] = value;
@@ -54,7 +54,7 @@ void Vector4::set_value(int index, double value){
 
 double Vector4::get_value(int index){
     if(index < 0 && index > 3){
-        qDebug("double Vector4::get_value(int index) has a wrong index: %i", index);
+        //qDebug("double Vector4::get_value(int index) has a wrong index: %i", index);
         return 0;
     }
     return vec4[index];
@@ -131,14 +131,14 @@ void Vector4::normalize(){
 
 const double& Vector4::operator[](int index) const{
     if(index < 0 && index > 3){
-        qDebug("const double& Vector4::operator[](int index) const has a wrong index: %i", index);
+        //qDebug("const double& Vector4::operator[](int index) const has a wrong index: %i", index);
     }
     return vec4[index];
 }
 
 double& Vector4::operator[](int index){
     if(index < 0 && index > 3){
-        qDebug("double& Vector4::operator[](int index) has a wrong index: %i", index);
+        //qDebug("double& Vector4::operator[](int index) has a wrong index: %i", index);
     }
     //var can be modified after return...
     return vec4[index];
@@ -147,14 +147,14 @@ double& Vector4::operator[](int index){
 
 const double& Vector4::operator()(int index) const{
     if(index < 0 && index > 3){
-        qDebug("const double& Vector4::operator()(int index) const has a wrong index: %i", index);
+        //qDebug("const double& Vector4::operator()(int index) const has a wrong index: %i", index);
     }
     return vec4[index];
 }
 
 double& Vector4::operator()(int index){
     if(index < 0 && index > 3){
-        qDebug("double& Vector4::operator()(int index) has a wrong index: %i", index);
+        //qDebug("double& Vector4::operator()(int index) has a wrong index: %i", index);
     }
     //var can be modified after return...
     return vec4[index];

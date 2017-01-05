@@ -155,10 +155,10 @@ void Matrix3x3::set_array(double mat3[]){
     Outputs the matrix in the console by using Qt's qDebug() function.
 */
 void Matrix3x3::debug(){
-    qDebug("Matrix:");
-    qDebug("%f  %f  %f",mat3[0],mat3[1],mat3[2]);
-    qDebug("%f  %f  %f",mat3[3],mat3[4],mat3[5]);
-    qDebug("%f  %f  %f",mat3[6],mat3[7],mat3[8]);
+    //qDebug("Matrix:");
+    //qDebug("%f  %f  %f",mat3[0],mat3[1],mat3[2]);
+    //qDebug("%f  %f  %f",mat3[3],mat3[4],mat3[5]);
+    //qDebug("%f  %f  %f",mat3[6],mat3[7],mat3[8]);
 
 }
 
@@ -172,7 +172,7 @@ void Matrix3x3::debug(){
 const double& Matrix3x3::operator[](int index) const
 {
     if(index < 0 && index > 8){
-        qDebug("const double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
+        //qDebug("const double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
     }
     return mat3[index];
 }
@@ -183,7 +183,7 @@ const double& Matrix3x3::operator[](int index) const
 double& Matrix3x3::operator[](int index)
 {
     if(index < 0 && index > 8){
-        qDebug("double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
+        //qDebug("double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
     }
     flagBits = General;
     return mat3[index];
@@ -195,7 +195,7 @@ double& Matrix3x3::operator[](int index)
 const double& Matrix3x3::operator()(int index) const
 {
     if(index < 0 && index > 8){
-        qDebug("const double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
+        //qDebug("const double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
     }
     return mat3[index];
 }
@@ -206,7 +206,7 @@ const double& Matrix3x3::operator()(int index) const
 double& Matrix3x3::operator()(int index)
 {
     if(index < 0 && index > 8){
-        qDebug("double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
+        //qDebug("double& Matrix3x3::operator()(int index) has a wrong index: %i", index);
     }
     flagBits = General;
     return mat3[index];
@@ -218,7 +218,7 @@ double& Matrix3x3::operator()(int index)
 const double& Matrix3x3::operator()(int aRow, int aColumn) const
 {
     if(aRow < 0 && aRow > 2 && aColumn < 0 && aColumn > 2){
-        qDebug("const double& Matrix3x3::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
+        //qDebug("const double& Matrix3x3::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
     }
     return mat3[aColumn+aRow*3];
 }
@@ -229,7 +229,7 @@ const double& Matrix3x3::operator()(int aRow, int aColumn) const
 double& Matrix3x3::operator()(int aRow, int aColumn)
 {
     if(aRow < 0 && aRow > 2 && aColumn < 0 && aColumn > 2){
-        qDebug("double& Matrix3x3::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
+        //qDebug("double& Matrix3x3::operator()(int aRow, int aColumn) has wrong indizes: %i  %i", aRow, aColumn);
     }
     flagBits = General;
     return mat3[aColumn+aRow*3];

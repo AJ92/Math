@@ -1,7 +1,6 @@
 #ifndef MATRIX3X3_H
 #define MATRIX3X3_H
 
-#include <QDebug>
 
 #include "Vector/vector3.h"
 #include "Vector/vector4.h"

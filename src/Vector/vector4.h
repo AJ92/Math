@@ -69,20 +69,20 @@ public:
 
     static double dotProduct(const Vector4& v1, const Vector4& v2);
 
-    friend bool operator==(const Vector4 &v1, const Vector4 &v2);
-    friend bool operator!=(const Vector4 &v1, const Vector4 &v2);
-    friend const Vector4 operator+(const Vector4 &v1, const Vector4 &v2);
-    friend const Vector4 operator-(const Vector4 &v1, const Vector4 &v2);
-    friend const Vector4 operator*(double factor, const Vector4 &vector);
-    friend const Vector4 operator*(const Vector4 &vector, double factor);
-    friend const Vector4 operator*(const Vector4 &v1, const Vector4& v2);
-    friend const Vector4 operator-(const Vector4 &vector);
-    friend const Vector4 operator/(const Vector4 &vector, double divisor);
+	MATHEMATICSSHARED_EXPORT friend bool operator==(const Vector4 &v1, const Vector4 &v2);
+	MATHEMATICSSHARED_EXPORT friend bool operator!=(const Vector4 &v1, const Vector4 &v2);
+	MATHEMATICSSHARED_EXPORT friend const Vector4 operator+(const Vector4 &v1, const Vector4 &v2);
+	MATHEMATICSSHARED_EXPORT friend const Vector4 operator-(const Vector4 &v1, const Vector4 &v2);
+	MATHEMATICSSHARED_EXPORT friend const Vector4 operator*(double factor, const Vector4 &vector);
+	MATHEMATICSSHARED_EXPORT friend const Vector4 operator*(const Vector4 &vector, double factor);
+	MATHEMATICSSHARED_EXPORT friend const Vector4 operator*(const Vector4 &v1, const Vector4& v2);
+	MATHEMATICSSHARED_EXPORT friend const Vector4 operator-(const Vector4 &vector);
+	MATHEMATICSSHARED_EXPORT friend const Vector4 operator/(const Vector4 &vector, double divisor);
 
 
     //Matrix stuff
-    friend Vector4 operator*(const Vector4& vector, const Matrix4x4& matrix);
-    friend Vector4 operator*(const Matrix4x4& matrix, const Vector4& vector);
+	MATHEMATICSSHARED_EXPORT friend Vector4 operator*(const Vector4& vector, const Matrix4x4& matrix);
+	MATHEMATICSSHARED_EXPORT friend Vector4 operator*(const Matrix4x4& matrix, const Vector4& vector);
 
 
 private:
