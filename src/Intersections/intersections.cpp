@@ -17,7 +17,7 @@ bool Intersections::sphereAABBIntersection(Sphere s, AABB a){
     Vector3 aabb_bmin = a.getBmin();
     Vector3 aabb_bmax = a.getBmax();
 
-    float r2 = sphere_radius * sphere_radius;
+    double r2 = sphere_radius * sphere_radius;
     double dmin = 0.0;
 
     //3 dimensions

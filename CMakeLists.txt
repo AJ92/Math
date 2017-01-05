@@ -9,12 +9,21 @@ project(mathematics_project)
 # these instructions search the directory tree when cmake is
 # invoked and put all files that match the pattern in the variables
 # `sources` and `data`
-file(GLOB_RECURSE sources      src/*.cpp src/*.h)
-file(GLOB_RECURSE sources1      src/Geometry/*.cpp src/Geometry/*.h)
-file(GLOB_RECURSE sources2      src/Intersections/*.cpp src/Intersections/*.h)
-file(GLOB_RECURSE sources3      src/Matrix/*.cpp src/Matrix/*.h)
-file(GLOB_RECURSE sources4      src/Vector/*.cpp src/Vector/*.h)
-file(GLOB_RECURSE sources5      src/Helper/*.cpp src/Helper/*.h)
+file(GLOB_RECURSE sources                   src/*.cpp)
+file(GLOB_RECURSE sources_geometry          src/Geometry/*.cpp)
+file(GLOB_RECURSE sources_intersections     src/Intersections/*.cpp)
+file(GLOB_RECURSE sources_matrix            src/Matrix/*.cpp)
+file(GLOB_RECURSE sources_vector            src/Vector/*.cpp)
+file(GLOB_RECURSE sources_helper            src/Helper/*.cpp)
+
+file(GLOB_RECURSE includes                   include/*.h)
+file(GLOB_RECURSE includes_geometry          include/Geometry/*.h)
+file(GLOB_RECURSE includes_intersections     include/Intersections/*.h)
+file(GLOB_RECURSE includes_matrix            include/Matrix/*.h)
+file(GLOB_RECURSE includes_vector            include/Vector/*.h)
+file(GLOB_RECURSE includes_helper            include/Helper/*.h)
+
+
 file(GLOB_RECURSE sources_test src/test/*.cpp)
 # file(GLOB_RECURSE data resources/*)
 # you can use set(sources src/main.cpp) etc if you don't want to
@@ -34,18 +43,33 @@ IF (BUILD_SHARED_LIBS)
 ENDIF (BUILD_SHARED_LIBS)
 
 # add the data to the target, so it becomes visible in some IDE
-add_library(mathematics ${LIB_TYPE} ${sources} ${sources1} ${sources2} ${sources3} ${sources4} ${sources5} ${data})
+add_library(mathematics ${LIB_TYPE}
+  ${includes}
+  ${includes_geometry}
+  ${includes_intersections}
+  ${includes_matrix}
+  ${includes_vector}
+  ${includes_helper}
+
+  ${sources}
+  ${sources_geometry}
+  ${sources_intersections}
+  ${sources_matrix}
+  ${sources_vector}
+  ${sources_helper}
+
+  ${data}
+)
 
 # just for example add some compiler flags
 target_compile_options(mathematics PUBLIC -std=c++1y -Wall)
 
 #MAKE IT EXPORT!!!
 add_definitions(-DMATHEMATICS_LIBRARY)
-# INCASE STATIC BUILD CAN NOT LINK!!!
-add_definitions(-DBUILDER_STATIC_DEFINE)
+
 
 # this lets me include files relative to the root src dir with a <> pair
-target_include_directories(mathematics PUBLIC src/)
+target_include_directories(mathematics PUBLIC include/)
 
 # this copies all resource files in the build directory
 # we need this, because we want to work with paths relative to the executable

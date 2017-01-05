@@ -179,32 +179,32 @@ public:
     double& operator()(int row, int column);
 
     Matrix4x4& operator+=(const Matrix4x4& other);
-    friend Matrix4x4 operator+(const Matrix4x4& m1, const Matrix4x4& m2);
+	MATHEMATICSSHARED_EXPORT friend Matrix4x4 operator+(const Matrix4x4& m1, const Matrix4x4& m2);
 
     Matrix4x4& operator+=(const double& value);
-    friend Matrix4x4 operator+(const Matrix4x4& m1, const double& value);
-    friend Matrix4x4 operator+(const double& value, const Matrix4x4& m1);
+	MATHEMATICSSHARED_EXPORT friend Matrix4x4 operator+(const Matrix4x4& m1, const double& value);
+	MATHEMATICSSHARED_EXPORT friend Matrix4x4 operator+(const double& value, const Matrix4x4& m1);
 
     Matrix4x4& operator-=(const Matrix4x4& other);
-    friend Matrix4x4 operator-(const Matrix4x4& m1, const Matrix4x4& m2);
+	MATHEMATICSSHARED_EXPORT friend Matrix4x4 operator-(const Matrix4x4& m1, const Matrix4x4& m2);
 
     Matrix4x4& operator*=(const Matrix4x4& other);
-    friend Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2);
+	MATHEMATICSSHARED_EXPORT friend Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2);
 
     Matrix4x4& operator*=(const double& multiplier);
-    friend Matrix4x4 operator*(const Matrix4x4& m1, const double& multiplier);
-    friend Matrix4x4 operator*(const double& multiplier, const Matrix4x4& m1);
+	MATHEMATICSSHARED_EXPORT friend Matrix4x4 operator*(const Matrix4x4& m1, const double& multiplier);
+	MATHEMATICSSHARED_EXPORT friend Matrix4x4 operator*(const double& multiplier, const Matrix4x4& m1);
 
     Matrix4x4& operator/=(const double& divisor);
-    friend Matrix4x4 operator/(const Matrix4x4& m1, const double& divisor);
+	MATHEMATICSSHARED_EXPORT friend Matrix4x4 operator/(const Matrix4x4& m1, const double& divisor);
 
 
     //Vector stuff
-    friend Vector4 operator*(const Vector4& vector, const Matrix4x4& matrix);
-    friend Vector4 operator*(const Matrix4x4& matrix, const Vector4& vector);
+	MATHEMATICSSHARED_EXPORT friend Vector4 operator*(const Vector4& vector, const Matrix4x4& matrix);
+	MATHEMATICSSHARED_EXPORT friend Vector4 operator*(const Matrix4x4& matrix, const Vector4& vector);
 
-    friend Vector3 operator*(const Vector3& vector, const Matrix4x4& matrix);
-    friend Vector3 operator*(const Matrix4x4& matrix, const Vector3& vector);
+	MATHEMATICSSHARED_EXPORT friend Vector3 operator*(const Vector3& vector, const Matrix4x4& matrix);
+	MATHEMATICSSHARED_EXPORT friend Vector3 operator*(const Matrix4x4& matrix, const Vector3& vector);
 
 private:
     double mat4[16];
