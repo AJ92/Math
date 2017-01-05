@@ -1,4 +1,4 @@
-#include "matrix3x3.h"
+#include "Matrix/matrix3x3.h"
 
 /*!
     Constructs the 3x3 Matrix and sets it to it's Identity.

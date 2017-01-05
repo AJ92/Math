@@ -29,6 +29,7 @@ file(GLOB_RECURSE sources_test src/test/*.cpp)
 # you can use set(sources src/main.cpp) etc if you don't want to
 # use globing to find files automatically
 
+
 ###############################################################################
 ## target definitions #########################################################
 ###############################################################################
@@ -50,22 +51,22 @@ add_library(mathematics ${LIB_TYPE}
   ${includes_matrix}
   ${includes_vector}
   ${includes_helper}
-
   ${sources}
   ${sources_geometry}
   ${sources_intersections}
   ${sources_matrix}
   ${sources_vector}
   ${sources_helper}
-
   ${data}
 )
 
 # just for example add some compiler flags
-target_compile_options(mathematics PUBLIC -std=c++1y -Wall)
+target_compile_options(mathematics PUBLIC -std=c++13 -Wall)
 
 #MAKE IT EXPORT!!!
-add_definitions(-DMATHEMATICS_LIBRARY)
+#add_definitions(-MATHEMATICS_LIBRARY_DYNAMIC)
+add_definitions(-DMATHEMATICS_LIBRARY_STATIC)
+
 
 
 # this lets me include files relative to the root src dir with a <> pair

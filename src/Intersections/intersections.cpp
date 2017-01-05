@@ -1,4 +1,4 @@
-#include "intersections.h"
+#include "Intersections/intersections.h"
 
 Intersections::Intersections()
 {
